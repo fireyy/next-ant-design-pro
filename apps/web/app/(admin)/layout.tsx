@@ -1,8 +1,8 @@
 "use client";
 
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { AppLayout } from "@/components/AppLayout";
 import "@ant-design/v5-patch-for-react-19";
-import "./globals.css";
 
 export default function RootLayout({
   children,
@@ -12,7 +12,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AntdRegistry>{children}</AntdRegistry>
+        <AntdRegistry>
+          <AppLayout>{children}</AppLayout>
+        </AntdRegistry>
       </body>
     </html>
   );

@@ -11,14 +11,17 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.6.1",
-    "@ant-design/pro-components": "^2.7.19",
+    "@ant-design/icons": "^6.0.0",
+    "@ant-design/nextjs-registry": "^1.1.0",
+    "@ant-design/pro-components": "^2.8.10",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@repo/ui": "workspace:*",
     "antd": "^5.25.4",
     "antd-style": "^3.7.0",
+    "axios": "^1.11.0",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
+    "jotai": "^2.12.5",
     "next": "^15.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
