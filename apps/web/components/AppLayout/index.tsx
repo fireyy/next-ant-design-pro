@@ -1,14 +1,12 @@
 "use client";
 
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { ProLayout, SettingDrawer } from "@ant-design/pro-components";
-import type {
-  ProLayoutProps,
-  Settings as LayoutSettings,
-} from "@ant-design/pro-components";
+import type { ProLayoutProps } from "@ant-design/pro-components";
 import { LinkOutlined } from "@ant-design/icons";
 import { AvatarDropdown, AvatarName, Footer, Question, SelectLang } from "..";
 import Link from "next/link";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { globalSettings, globalUserInfo } from "@/stores";
 import type { ISettings } from "@/config";
 
@@ -17,16 +15,18 @@ const isDevOrTest = isDev || process.env.CI;
 const loginPath = "/user/login";
 
 type IGetLayoutProps = {
-  currentUser: API.CurrentUser;
+  currentUser: API.CurrentUser | null;
   settings: ISettings;
 };
 
 type RunTimeLayoutConfig = (initData: IGetLayoutProps) => ProLayoutProps;
 
-const getLayoutProps: RunTimeLayoutConfig = ({
+const useLayoutProps: RunTimeLayoutConfig = ({
   currentUser,
   settings,
 }: IGetLayoutProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
   return {
     actionsRender: () => [
       <Question key="doc" />,
@@ -43,14 +43,12 @@ const getLayoutProps: RunTimeLayoutConfig = ({
       content: currentUser?.name,
     },
     footerRender: () => <Footer />,
-    // TODO: 页面跳转时判断登录态，并做相应跳转
-    // onPageChange: () => {
-    //   const { location } = history;
-    //   // 如果没有登录，重定向到 login
-    //   if (!currentUser && location.pathname !== loginPath) {
-    //     history.push(loginPath);
-    //   }
-    // },
+    onPageChange: () => {
+      // 如果没有登录，重定向到 login
+      if (!currentUser && pathname !== loginPath) {
+        router.push(loginPath);
+      }
+    },
     bgLayoutImgList: [
       {
         src: "https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr",
@@ -92,7 +90,7 @@ export const AppLayout = (props: React.PropsWithChildren) => {
   const { children } = props;
   const currentUser = useAtomValue(globalUserInfo);
   const [settings, setSettings] = useAtom(globalSettings);
-  const layoutProps = getLayoutProps({ currentUser, settings });
+  const layoutProps = useLayoutProps({ currentUser, settings });
 
   return (
     <ProLayout {...layoutProps}>

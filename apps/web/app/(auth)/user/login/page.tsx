@@ -1,3 +1,5 @@
+"use client";
+
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -12,21 +14,30 @@ import {
   ProFormCheckbox,
   ProFormText,
 } from "@ant-design/pro-components";
-import {
-  FormattedMessage,
-  Helmet,
-  SelectLang,
-  useIntl,
-  useModel,
-} from "@umijs/max";
+import { message as Message } from "antd";
+import type { Metadata } from "next";
 import { Alert, App, Tabs } from "antd";
 import { createStyles } from "antd-style";
 import React, { useState } from "react";
-import { flushSync } from "react-dom";
-import { Footer } from "@/components";
-import { login } from "@/services/api";
+import { Footer, SelectLang } from "@/components";
+import { currentUser, login } from "@/services/api";
 import { getFakeCaptcha } from "@/services/login";
 import Settings from "@/config";
+import { useAtom, useSetAtom } from "jotai";
+import { globalUserInfo } from "@/stores";
+import { FormattedMessage, useIntl, formatMessage } from "@/locales";
+import { useRouter } from "next/navigation";
+
+// export async function generateMetadata(): Promise<Metadata> {
+//   const str = formatMessage({
+//     id: "menu.login",
+//     defaultMessage: "登录页",
+//   });
+
+//   return {
+//     title: `${str} - ${Settings.title as string}`,
+//   };
+// }
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -110,25 +121,13 @@ const LoginMessage: React.FC<{
   );
 };
 
-const Login: React.FC = () => {
+export default function Login() {
+  const router = useRouter();
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>("account");
-  const { initialState, setInitialState } = useModel("@@initialState");
   const { styles } = useStyles();
-  const { message } = App.useApp();
   const intl = useIntl();
-
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.();
-    if (userInfo) {
-      flushSync(() => {
-        setInitialState((s) => ({
-          ...s,
-          currentUser: userInfo,
-        }));
-      });
-    }
-  };
+  const [message, contextHolder] = Message.useMessage();
 
   const handleSubmit = async (values: API.LoginParams) => {
     try {
@@ -140,9 +139,9 @@ const Login: React.FC = () => {
           defaultMessage: "登录成功！",
         });
         message.success(defaultLoginSuccessMessage);
-        await fetchUserInfo();
+        // await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
-        window.location.href = urlParams.get("redirect") || "/";
+        router.push(urlParams.get("redirect") || "/");
         return;
       }
       console.log(msg);
@@ -161,15 +160,7 @@ const Login: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Helmet>
-        <title>
-          {intl.formatMessage({
-            id: "menu.login",
-            defaultMessage: "登录页",
-          })}
-          {Settings.title && ` - ${Settings.title}`}
-        </title>
-      </Helmet>
+      {contextHolder}
       <Lang />
       <div
         style={{
@@ -182,7 +173,7 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: "75vw",
           }}
-          logo={<img alt="logo" src="/logo.svg" />}
+          logo={<img alt="logo" src={Settings.logo} />}
           title="Ant Design"
           subTitle={intl.formatMessage({
             id: "pages.layouts.userLayout.title",
@@ -392,6 +383,4 @@ const Login: React.FC = () => {
       <Footer />
     </div>
   );
-};
-
-export default Login;
+}

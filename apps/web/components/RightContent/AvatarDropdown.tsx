@@ -63,7 +63,7 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
     const redirect = urlParams.get("redirect");
     // Note: There may be security issues, please note
     if (window.location.pathname !== "/user/login" && !redirect) {
-      router.replace(`/user/login?redirect=${redirect}`);
+      router.replace(`/user/login?${searchParams.toString()}`);
     }
   };
   const { styles } = useStyles();
@@ -74,7 +74,7 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
     const { key } = event;
     if (key === "logout") {
       flushSync(() => {
-        setCurrentUser(() => ({}));
+        setCurrentUser(null);
       });
       loginOut();
       return;
