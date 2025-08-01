@@ -106,7 +106,7 @@ declare namespace API {
   type MenuDataItem = {
     path: string;
     name?: string;
-    icon?: string;
+    icon?: string | React.ReactNode;
     layout?: boolean;
     routes?: MenuDataItem[];
     redirect?: string;

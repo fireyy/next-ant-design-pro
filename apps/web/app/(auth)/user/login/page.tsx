@@ -15,29 +15,15 @@ import {
   ProFormText,
 } from "@ant-design/pro-components";
 import { message as Message } from "antd";
-import type { Metadata } from "next";
-import { Alert, App, Tabs } from "antd";
+import { Alert, Tabs } from "antd";
 import { createStyles } from "antd-style";
 import React, { useState } from "react";
-import { Footer, SelectLang } from "@/components";
-import { currentUser, login } from "@/services/api";
+import { Footer } from "@/components";
+import { login } from "@/services/api";
 import { getFakeCaptcha } from "@/services/login";
 import Settings from "@/config";
-import { useAtom, useSetAtom } from "jotai";
-import { globalUserInfo } from "@/stores";
-import { FormattedMessage, useIntl, formatMessage } from "@/locales";
+import { FormattedMessage, useIntl, SelectLang } from "@/lib/locales";
 import { useRouter } from "next/navigation";
-
-// export async function generateMetadata(): Promise<Metadata> {
-//   const str = formatMessage({
-//     id: "menu.login",
-//     defaultMessage: "登录页",
-//   });
-
-//   return {
-//     title: `${str} - ${Settings.title as string}`,
-//   };
-// }
 
 const useStyles = createStyles(({ token }) => {
   return {

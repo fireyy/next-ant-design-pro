@@ -10,6 +10,8 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { globalSettings, globalUserInfo } from "@/stores";
 import type { ISettings } from "@/config";
 import { getMenuData } from "@/services/api";
+import { useIntl, IntlProvider } from "@/lib/locales";
+import { patchRoutes } from "@/lib/patchRoutes";
 
 // 使用动态加载的方式，可以使部分组件在客户端渲染完成后再执行
 const ProLayout = dynamic(
@@ -36,13 +38,43 @@ const useLayoutProps: RunTimeLayoutConfig = ({
 }: IGetLayoutProps) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { formatMessage } = useIntl();
   return {
     menu: {
+      locale: true,
       params: currentUser,
-      request: async (params, defaultMenuData) => {
+      request: async (_params, _defaultMenuData) => {
         const { data } = await getMenuData();
-        return data;
+        return patchRoutes(data);
       },
+    },
+    formatMessage: formatMessage,
+    menuItemRender: (menuItemProps, defaultDom) => {
+      if (menuItemProps.isUrl || menuItemProps.children) {
+        return defaultDom;
+      }
+      if (menuItemProps.path && location.pathname !== menuItemProps.path) {
+        return (
+          // handle wildcard route path, for example /slave/* from qiankun
+          <Link
+            href={menuItemProps.path.replace("/*", "")}
+            target={menuItemProps.target}
+          >
+            {defaultDom}
+          </Link>
+        );
+      }
+      return defaultDom;
+    },
+    itemRender: (route, _, routes) => {
+      const { title, path } = route;
+      const last = routes[routes.length - 1];
+      if (last) {
+        if (last.path === path) {
+          return <span>{title}</span>;
+        }
+      }
+      return <Link href={path || "/"}>{title}</Link>;
     },
     actionsRender: () => [
       <Question key="doc" />,

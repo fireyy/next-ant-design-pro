@@ -1,25 +1,15 @@
-import { FlagOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import HeaderDropdown from "../HeaderDropdown";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import { SelectLang as SelectLangComponent } from "@/lib/locales";
 
 export type SiderTheme = "light" | "dark";
 
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: "English",
-  },
-  {
-    key: "2",
-    label: "中文",
-  },
-];
-
 export const SelectLang: React.FC = () => {
   return (
-    <HeaderDropdown menu={{ items }} placement="bottomLeft">
-      <FlagOutlined />
-    </HeaderDropdown>
+    <SelectLangComponent
+      style={{
+        padding: 4,
+      }}
+    />
   );
 };
 
