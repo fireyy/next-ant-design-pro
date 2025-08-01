@@ -58,6 +58,7 @@ let config: RequestConfig;
 const getConfig = (): RequestConfig => {
   if (config) return config;
   config = {
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     url: "/",
   };
   return config;

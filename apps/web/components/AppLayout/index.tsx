@@ -1,7 +1,7 @@
 "use client";
-
+import dynamic from "next/dynamic";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { ProLayout, SettingDrawer } from "@ant-design/pro-components";
+import { SettingDrawer } from "@ant-design/pro-components";
 import type { ProLayoutProps } from "@ant-design/pro-components";
 import { LinkOutlined } from "@ant-design/icons";
 import { AvatarDropdown, AvatarName, Footer, Question, SelectLang } from "..";
@@ -9,13 +9,22 @@ import Link from "next/link";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { globalSettings, globalUserInfo } from "@/stores";
 import type { ISettings } from "@/config";
+import { getMenuData } from "@/services/api";
+
+// 使用动态加载的方式，可以使部分组件在客户端渲染完成后再执行
+const ProLayout = dynamic(
+  () => import("@ant-design/pro-components").then((mod) => mod.ProLayout),
+  {
+    ssr: false,
+  }
+);
 
 const isDev = process.env.NODE_ENV === "development";
 const isDevOrTest = isDev || process.env.CI;
 const loginPath = "/user/login";
 
 type IGetLayoutProps = {
-  currentUser: API.CurrentUser | null;
+  currentUser: API.CurrentUser | undefined;
   settings: ISettings;
 };
 
@@ -28,6 +37,13 @@ const useLayoutProps: RunTimeLayoutConfig = ({
   const router = useRouter();
   const pathname = usePathname();
   return {
+    menu: {
+      params: currentUser,
+      request: async (params, defaultMenuData) => {
+        const { data } = await getMenuData();
+        return data;
+      },
+    },
     actionsRender: () => [
       <Question key="doc" />,
       <SelectLang key="SelectLang" />,
@@ -86,7 +102,7 @@ const useLayoutProps: RunTimeLayoutConfig = ({
   };
 };
 
-export const AppLayout = (props: React.PropsWithChildren) => {
+export default function AppLayout(props: React.PropsWithChildren) {
   const { children } = props;
   const currentUser = useAtomValue(globalUserInfo);
   const [settings, setSettings] = useAtom(globalSettings);
@@ -107,4 +123,4 @@ export const AppLayout = (props: React.PropsWithChildren) => {
       )}
     </ProLayout>
   );
-};
+}

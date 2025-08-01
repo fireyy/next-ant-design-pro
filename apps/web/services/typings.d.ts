@@ -1,5 +1,4 @@
 // @ts-ignore
-/* eslint-disable */
 
 declare namespace API {
   type CurrentUser = {
@@ -84,7 +83,7 @@ declare namespace API {
     success?: boolean;
   };
 
-  type NoticeIconItemType = 'notification' | 'message' | 'event';
+  type NoticeIconItemType = "notification" | "message" | "event";
 
   type NoticeIconItem = {
     id?: string;
@@ -97,5 +96,20 @@ declare namespace API {
     datetime?: string;
     description?: string;
     type?: NoticeIconItemType;
+  };
+
+  type MenuData = {
+    data: MenuDataItem[];
+    success: boolean;
+  };
+
+  type MenuDataItem = {
+    path: string;
+    name?: string;
+    icon?: string;
+    layout?: boolean;
+    routes?: MenuDataItem[];
+    redirect?: string;
+    component?: string;
   };
 }

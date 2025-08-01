@@ -21,7 +21,7 @@ const userInfoAtom = atom<IUserInfo>(null);
 
 const fetchUserInfoAtom = selectAtomWithSwr(async () => {
   const userInfo = await currentUser();
-  return userInfo;
+  return userInfo.data;
 });
 
 export const globalUserInfo = atom(
@@ -40,3 +40,8 @@ export const globalSettings = atomWithStorage(
     getOnInit: true,
   }
 );
+
+export const initialState = atom({
+  currentUser: globalUserInfo,
+  settings: globalSettings,
+});

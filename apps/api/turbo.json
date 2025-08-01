@@ -1,0 +1,19 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "env": ["PORT"],
+      "outputs": ["dist/**"]
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true,
+      "env": [
+        "PORT",
+        "MOCK_MODE",
+        "ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION"
+      ]
+    }
+  }
+}
