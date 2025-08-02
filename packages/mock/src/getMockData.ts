@@ -34,6 +34,7 @@ export function getMockData(opts: IMockOptions): Record<string, IMock> {
     }, [])
     .reduce<Record<string, any>>((memo, file) => {
       const mockFile = join(opts.cwd, file);
+
       let m;
       try {
         delete require.cache[mockFile];

@@ -5,12 +5,16 @@ import { useRequest } from "@/services";
 import { Card, Col, Progress, Row, Statistic } from "antd";
 import numeral from "numeral";
 import type { FC } from "react";
-import ActiveChart from "./components/ActiveChart";
 import { queryTags } from "./service";
 import useStyles from "./style.style";
 import dynamic from "next/dynamic";
 
 const MonitorMap = dynamic(() => import("./components/Map"), {
+  ssr: false,
+  loading: () => <div>Loading ... </div>,
+});
+
+const ActiveChart = dynamic(() => import("./components/ActiveChart"), {
   ssr: false,
   loading: () => <div>Loading ... </div>,
 });

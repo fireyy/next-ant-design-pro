@@ -13,6 +13,7 @@ import type { ISettings } from "@/config";
 import { getMenuData } from "@/services/api";
 import { useIntl } from "@/lib/locales";
 import { patchRoutes } from "@/lib/patchRoutes";
+import menuData from "@/config/routes";
 
 // 使用动态加载的方式，可以使部分组件在客户端渲染完成后再执行
 const ProLayout = dynamic(
@@ -48,7 +49,7 @@ const useLayoutProps: RunTimeLayoutConfig = ({
       locale: true,
       params: currentUser,
       request: async (_params, _defaultMenuData) => {
-        const { data } = await getMenuData();
+        const { data } = isDev ? await getMenuData() : { data: menuData };
         return patchRoutes(data);
       },
     },
