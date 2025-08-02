@@ -250,6 +250,12 @@ export const getLocale = () => {
   if (typeof runtimeLocale?.getLocale === "function") {
     return runtimeLocale.getLocale();
   }
+
+  // Check if it's running on server side
+  if (typeof window === "undefined") {
+    return "zh-CN";
+  }
+
   // please clear localStorage if you change the baseSeparator config
   // because changing will break the app
   const lang =

@@ -1,4 +1,5 @@
 "use client";
+
 import dynamic from "next/dynamic";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { SettingDrawer } from "@ant-design/pro-components";
@@ -10,7 +11,7 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { globalSettings, globalUserInfo } from "@/stores";
 import type { ISettings } from "@/config";
 import { getMenuData } from "@/services/api";
-import { useIntl, IntlProvider } from "@/lib/locales";
+import { useIntl } from "@/lib/locales";
 import { patchRoutes } from "@/lib/patchRoutes";
 
 // 使用动态加载的方式，可以使部分组件在客户端渲染完成后再执行
@@ -40,6 +41,9 @@ const useLayoutProps: RunTimeLayoutConfig = ({
   const pathname = usePathname();
   const { formatMessage } = useIntl();
   return {
+    location: {
+      pathname,
+    },
     menu: {
       locale: true,
       params: currentUser,

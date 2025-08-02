@@ -1,25 +1,13 @@
+"use client";
+
 // @ts-nocheck
 import React, { useState } from "react";
-import { Menu, version, Dropdown } from "antd";
-import { ClickParam } from "antd/es/menu";
-import { DropDownProps } from "antd/es/dropdown";
+import HeaderDropdown from "@/components/HeaderDropdown";
+import type { MenuProps } from "antd";
 import { getLocale, getAllLocales, setLocale } from "./localeExports";
 
-export interface HeaderDropdownProps extends DropDownProps {
-  overlayClassName?: string;
-  placement?:
-    | "bottomLeft"
-    | "bottomRight"
-    | "topLeft"
-    | "topCenter"
-    | "topRight"
-    | "bottomCenter";
-}
-
-const HeaderDropdown: React.FC<HeaderDropdownProps> = ({
-  overlayClassName: cls,
-  ...restProps
-}) => <Dropdown overlayClassName={cls} {...restProps} />;
+// fix: https://github.com/ant-design/ant-design/pull/25468
+type ClickParam = Parameters<Exclude<MenuProps["onClick"], undefined>>[0];
 
 interface LocalData {
   lang: string;
@@ -38,20 +26,7 @@ interface SelectLangProps {
   style?: React.CSSProperties;
 }
 
-const transformArrayToObject = (allLangUIConfig: LocalData[]) => {
-  return allLangUIConfig.reduce((obj, item) => {
-    if (!item.lang) {
-      return obj;
-    }
-
-    return {
-      ...obj,
-      [item.lang]: item,
-    };
-  }, {});
-};
-
-const defaultLangUConfigMap = {
+const defaultLangUConfigMap: Record<string, LocalData> = {
   "ar-EG": {
     lang: "ar-EG",
     label: "العربية",
@@ -418,7 +393,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
     selectedKeys: [selectedLang],
     onClick: handleClick,
     items: allLangUIConfig.map((localeObj) => ({
-      key: localeObj.lang || localeObj.key,
+      key: localeObj.lang,
       style: menuItemStyle,
       label: (
         <>
@@ -435,26 +410,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
     })),
   };
 
-  // antd@5 和  4.24 之后推荐使用 menu，性能更好
-  let dropdownProps;
-  if (version.startsWith("5.") || version.startsWith("4.24.")) {
-    dropdownProps = { menu: langMenu };
-  } else if (version.startsWith("3.")) {
-    dropdownProps = {
-      overlay: (
-        <Menu>
-          {langMenu.items.map((item) => (
-            <Menu.Item key={item.key} onClick={item.onClick}>
-              {item.label}
-            </Menu.Item>
-          ))}
-        </Menu>
-      ),
-    };
-  } else {
-    // 需要 antd 4.20.0 以上版本
-    dropdownProps = { overlay: <Menu {...langMenu} /> };
-  }
+  const dropdownProps = { menu: langMenu };
 
   const inlineStyle = {
     cursor: "pointer",

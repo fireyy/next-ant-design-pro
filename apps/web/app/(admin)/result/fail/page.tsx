@@ -55,7 +55,7 @@ const FailPage = () => {
   );
   return (
     <GridContent>
-      <Card bordered={false}>
+      <Card variant="borderless">
         <Result
           status="error"
           title="提交失败"

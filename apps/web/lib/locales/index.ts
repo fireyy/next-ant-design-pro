@@ -11,7 +11,6 @@ export {
   FormattedDate,
   FormattedDateParts,
   FormattedDisplayName,
-  FormattedHTMLMessage,
   FormattedList,
   FormattedNumber,
   FormattedNumberParts,

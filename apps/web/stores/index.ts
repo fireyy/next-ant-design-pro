@@ -41,6 +41,8 @@ export const globalSettings = atomWithStorage(
   }
 );
 
+const localeAtom = atomWithStorage("locale", "zh-CN");
+
 export const initialState = atom({
   currentUser: globalUserInfo,
   settings: globalSettings,

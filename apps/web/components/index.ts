@@ -5,8 +5,18 @@
 /**
  * 布局组件
  */
-import Footer from './Footer';
-import { Question, SelectLang } from './RightContent';
-import { AvatarDropdown, AvatarName } from './RightContent/AvatarDropdown';
+import Footer from "./Footer";
+import { Question, SelectLang } from "./RightContent";
+import { AvatarDropdown, AvatarName } from "./RightContent/AvatarDropdown";
+import AppLayout from "./AppLayout";
+import LocaleProvider from "./AppLayout/LocaleProvider";
 
-export { AvatarDropdown, AvatarName, Footer, Question, SelectLang };
+export {
+  AvatarDropdown,
+  AvatarName,
+  Footer,
+  Question,
+  SelectLang,
+  AppLayout,
+  LocaleProvider,
+};
