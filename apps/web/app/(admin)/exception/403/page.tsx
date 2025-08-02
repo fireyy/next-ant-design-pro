@@ -9,7 +9,7 @@ export default function Page403() {
         title="403"
         subTitle="Sorry, you are not authorized to access this page."
         extra={
-          <Link href="/">
+          <Link href="/" passHref>
             <Button type="primary">Back to home</Button>
           </Link>
         }

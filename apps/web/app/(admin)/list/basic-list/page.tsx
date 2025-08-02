@@ -73,7 +73,7 @@ const ListContent = ({
     </div>
   );
 };
-export const BasicList: FC = () => {
+export default function BasicList() {
   const { styles } = useStyles();
   const [done, setDone] = useState<boolean>(false);
   const [open, setVisible] = useState<boolean>(false);
@@ -278,5 +278,4 @@ export const BasicList: FC = () => {
       />
     </div>
   );
-};
-export default BasicList;
+}

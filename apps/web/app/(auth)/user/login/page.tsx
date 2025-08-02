@@ -21,7 +21,7 @@ import React, { useState } from "react";
 import { Footer } from "@/components";
 import { login } from "@/services/api";
 import { getFakeCaptcha } from "@/services/login";
-import Settings from "@/config";
+import { defaultSettings as Settings } from "@/config";
 import { FormattedMessage, useIntl, SelectLang } from "@/lib/locales";
 import { useRouter } from "next/navigation";
 

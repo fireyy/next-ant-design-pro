@@ -35,8 +35,8 @@ export default function useSafeState<T>(
       return;
     }
 
-    setValue(updater);
+    setValue(updater as T);
   }
 
-  return [value, safeSetState];
+  return [value as T, safeSetState];
 }

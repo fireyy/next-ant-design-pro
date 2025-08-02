@@ -9,7 +9,7 @@ export default function Page500() {
         title="500"
         subTitle="Sorry, something went wrong."
         extra={
-          <Link href="/">
+          <Link href="/" passHref>
             <Button type="primary">Back Home</Button>
           </Link>
         }

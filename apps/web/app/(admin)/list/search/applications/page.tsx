@@ -26,7 +26,8 @@ import TagSelect from "./components/TagSelect";
 import type { ListItemDataType } from "./data.d";
 import { queryFakeList } from "./service";
 import useStyles from "./style.style";
-export function formatWan(val: number) {
+
+function formatWan(val: number) {
   const v = val * 1;
   if (!v || Number.isNaN(v)) return "";
   let result: React.ReactNode = val;
@@ -78,7 +79,7 @@ const CardInfo: React.FC<{
     </div>
   );
 };
-export const Applications: FC<Record<string, any>> = () => {
+const Applications: FC = () => {
   const { styles } = useStyles();
   const { data, loading, run } = useRequest((values: any) => {
     console.log("form data", values);

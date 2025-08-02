@@ -9,7 +9,7 @@ export default function Page404() {
         title="404"
         subTitle="Sorry, the page you visited does not exist."
         extra={
-          <Link href="/">
+          <Link href="/" passHref>
             <Button type="primary">Back Home</Button>
           </Link>
         }

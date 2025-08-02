@@ -74,7 +74,7 @@ const StepResult: React.FC<{
     </Result>
   );
 };
-const StepForm: React.FC<Record<string, any>> = () => {
+const StepForm: React.FC = () => {
   const { styles } = useStyles();
   const [stepData, setStepData] = useState<StepDataType>({
     payAccount: "ant-design@alipay.com",

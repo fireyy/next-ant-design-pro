@@ -20,12 +20,12 @@ import useStyles from "./style.style";
 import { getTimeDistance } from "./utils/utils";
 
 type RangePickerValue = RangePickerProps["value"];
-type AnalysisProps = {
-  dashboardAndanalysis: AnalysisData;
-  loading: boolean;
-};
+// type AnalysisProps = {
+//   dashboardAndanalysis: AnalysisData;
+//   loading: boolean;
+// };
 type SalesType = "all" | "online" | "stores";
-const Analysis: FC<AnalysisProps> = () => {
+const Analysis: FC = () => {
   const { styles } = useStyles();
   const [salesType, setSalesType] = useState<SalesType>("all");
   const [currentTabKey, setCurrentTabKey] = useState<string>("");

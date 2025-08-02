@@ -17,7 +17,7 @@ import type { FC } from "react";
 import { fakeSubmitForm } from "./service";
 import useStyles from "./style.style";
 
-const BasicForm: FC<Record<string, any>> = () => {
+const BasicForm: FC = () => {
   const { styles } = useStyles();
   const { run } = useRequest(fakeSubmitForm, {
     manual: true,

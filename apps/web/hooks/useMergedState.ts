@@ -46,7 +46,7 @@ export default function useMergedState<T, R = T>(
   const postMergedValue = postState ? postState(mergedValue) : mergedValue;
 
   // ====================== Change ======================
-  const onChangeFn = useEvent(onChange);
+  const onChangeFn = useEvent(onChange as (value: T, prevValue: T) => void);
 
   const [prevValue, setPrevValue] = useState<[T]>([mergedValue]);
 
@@ -60,7 +60,7 @@ export default function useMergedState<T, R = T>(
   // Sync value back to `undefined` when it from control to un-control
   useLayoutUpdateEffect(() => {
     if (!hasValue(value)) {
-      setInnerValue(value);
+      setInnerValue(value as T);
     }
   }, [value]);
 

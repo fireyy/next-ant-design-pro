@@ -64,7 +64,7 @@ interface ErrorField {
   name: InternalNamePath;
   errors: string[];
 }
-const AdvancedForm: FC<Record<string, any>> = () => {
+const AdvancedForm: FC = () => {
   const { styles } = useStyles();
   const [error, setError] = useState<ErrorField[]>([]);
   const getErrorInfo = (errors: ErrorField[]) => {

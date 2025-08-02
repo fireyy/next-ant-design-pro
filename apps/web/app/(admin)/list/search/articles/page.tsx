@@ -133,7 +133,7 @@ const Articles: FC = () => {
 
   return (
     <>
-      <Card bordered={false}>
+      <Card variant="borderless">
         <Form
           layout="inline"
           form={form}
@@ -172,9 +172,9 @@ const Articles: FC = () => {
                 options={ownerOptions}
               />
             </FormItem>
-            <a className={styles.selfTrigger} onClick={setOwner}>
+            <Button type="link" onClick={setOwner}>
               只看自己的
-            </a>
+            </Button>
           </StandardFormRow>
           <StandardFormRow title="其它选项" grid last>
             <Row gutter={16}>
