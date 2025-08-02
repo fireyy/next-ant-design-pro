@@ -1,6 +1,6 @@
 import { atom, Atom, Getter } from "jotai";
-import Settings from "@/config";
-import type { ISettings } from "@/config";
+import Settings from "@/config/defaultSettings";
+import type { ISettings } from "@/config/defaultSettings";
 import { currentUser } from "@/services/api";
 import { atomWithStorage, unwrap } from "jotai/utils";
 
