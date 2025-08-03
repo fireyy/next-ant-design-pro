@@ -1,23 +1,14 @@
-"use client";
-// TODO: 这里应该不需要 use client
-
 import React from "react";
 import "./globals.css";
-import { LocaleProvider } from "@/components";
-
-type LayoutProps = {
-  params: { locale: string };
-  children: React.ReactNode;
-};
+import LocaleProvider from "@/components/AppLayout/LocaleProvider";
 
 export default function RootLayout({
   children,
-  params,
-}: Readonly<LayoutProps>) {
-  const { locale } = params;
-
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang={locale}>
+    <html>
       <body>
         <LocaleProvider>{children}</LocaleProvider>
       </body>

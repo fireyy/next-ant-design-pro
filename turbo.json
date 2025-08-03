@@ -1,11 +1,11 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "globalEnv": ["MOCK_MODE"],
   "tasks": {
     "build": {
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "dependsOn": ["^build"],
-      "env": ["MOCK_MODE"],
       "outputs": [
         "build/**",
         ".vercel/**",

@@ -14,23 +14,19 @@ import ProportionSales from "./components/ProportionSales";
 import type { TimeType } from "./components/SalesCard";
 import SalesCard from "./components/SalesCard";
 import TopSearch from "./components/TopSearch";
-import type { AnalysisData } from "./data.d";
 import { fakeChartData } from "./service";
 import useStyles from "./style.style";
 import { getTimeDistance } from "./utils/utils";
 
 type RangePickerValue = RangePickerProps["value"];
-// type AnalysisProps = {
-//   dashboardAndanalysis: AnalysisData;
-//   loading: boolean;
-// };
+
 type SalesType = "all" | "online" | "stores";
 const Analysis: FC = () => {
   const { styles } = useStyles();
   const [salesType, setSalesType] = useState<SalesType>("all");
   const [currentTabKey, setCurrentTabKey] = useState<string>("");
   const [rangePickerValue, setRangePickerValue] = useState<RangePickerValue>(
-    getTimeDistance("year")
+    getTimeDistance("year"),
   );
   const { loading, data } = useRequest(fakeChartData);
   const selectDate = (type: TimeType) => {

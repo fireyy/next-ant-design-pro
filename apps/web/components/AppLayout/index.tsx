@@ -1,18 +1,30 @@
 "use client";
 
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { ProLayout, SettingDrawer } from "@ant-design/pro-components";
+import { useRouter, usePathname } from "next/navigation";
+import { Skeleton } from "antd";
+import { SettingDrawer } from "@ant-design/pro-components";
 import type { ProLayoutProps } from "@ant-design/pro-components";
 import { LinkOutlined } from "@ant-design/icons";
 import { AvatarDropdown, AvatarName, Footer, Question, SelectLang } from "..";
 import Link from "next/link";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { globalSettings, globalUserInfo } from "@/stores";
 import type { ISettings } from "@/config";
 import { getMenuData } from "@/services/api";
 import { useIntl } from "@/lib/locales";
 import { patchRoutes } from "@/lib/patchRoutes";
 import menuData from "@/config/routes";
+import dynamic from "next/dynamic";
+
+const ProLayout = dynamic(
+  () => import("@ant-design/pro-components").then((mod) => mod.ProLayout),
+  {
+    ssr: false,
+    loading: () => (
+      <Skeleton style={{ margin: "24px 40px", height: "60vh" }} active />
+    ),
+  },
+);
 
 const isDev = process.env.NODE_ENV === "development";
 const isDevOrTest = isDev || process.env.CI;
@@ -40,7 +52,7 @@ const useLayoutProps: RunTimeLayoutConfig = ({
     menu: {
       locale: true,
       params: currentUser,
-      request: async (_params, _defaultMenuData) => {
+      request: async () => {
         const { data } = isDev ? await getMenuData() : { data: menuData };
         return patchRoutes(data);
       },

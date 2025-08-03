@@ -1,4 +1,6 @@
-import { CaretUpOutlined, GithubOutlined } from "@ant-design/icons";
+"use client";
+
+import { GithubOutlined } from "@ant-design/icons";
 import { DefaultFooter } from "@ant-design/pro-components";
 import React from "react";
 
