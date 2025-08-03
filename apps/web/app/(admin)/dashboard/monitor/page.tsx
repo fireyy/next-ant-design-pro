@@ -2,21 +2,25 @@
 import { Gauge, Liquid, WordCloud } from "@ant-design/plots";
 import { GridContent } from "@ant-design/pro-components";
 import { useRequest } from "@/services";
-import { Card, Col, Progress, Row, Statistic } from "antd";
+import { Card, Col, Progress, Row, Skeleton, Statistic } from "antd";
 import numeral from "numeral";
-import type { FC } from "react";
+import { type FC } from "react";
 import { queryTags } from "./service";
 import useStyles from "./style.style";
 import dynamic from "next/dynamic";
 
 const MonitorMap = dynamic(() => import("./components/Map"), {
   ssr: false,
-  loading: () => <div>Loading ... </div>,
+  loading: () => (
+    <Skeleton style={{ margin: "24px 40px", height: "60vh" }} active />
+  ),
 });
 
 const ActiveChart = dynamic(() => import("./components/ActiveChart"), {
   ssr: false,
-  loading: () => <div>Loading ... </div>,
+  loading: () => (
+    <Skeleton style={{ margin: "24px 40px", height: "60vh" }} active />
+  ),
 });
 
 const { Timer } = Statistic;
@@ -108,7 +112,7 @@ const Monitor: FC = () => {
                   total: 100,
                   name: "score",
                   thresholds: [20, 40, 60, 80, 100],
-                } as any
+                } as const
               }
               padding={-16}
               style={{

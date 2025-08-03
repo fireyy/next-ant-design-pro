@@ -56,6 +56,7 @@ const ActiveChart = () => {
           axis={false}
           yField="y"
           height={84}
+          shapeField="smooth"
           style={{
             fill: "linear-gradient(-90deg, white 0%, #6294FA 100%)",
             fillOpacity: 0.6,
