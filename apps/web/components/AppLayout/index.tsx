@@ -1,8 +1,7 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { SettingDrawer } from "@ant-design/pro-components";
+import { ProLayout, SettingDrawer } from "@ant-design/pro-components";
 import type { ProLayoutProps } from "@ant-design/pro-components";
 import { LinkOutlined } from "@ant-design/icons";
 import { AvatarDropdown, AvatarName, Footer, Question, SelectLang } from "..";
@@ -14,14 +13,6 @@ import { getMenuData } from "@/services/api";
 import { useIntl } from "@/lib/locales";
 import { patchRoutes } from "@/lib/patchRoutes";
 import menuData from "@/config/routes";
-
-// 使用动态加载的方式，可以使部分组件在客户端渲染完成后再执行
-const ProLayout = dynamic(
-  () => import("@ant-design/pro-components").then((mod) => mod.ProLayout),
-  {
-    ssr: false,
-  },
-);
 
 const isDev = process.env.NODE_ENV === "development";
 const isDevOrTest = isDev || process.env.CI;
