@@ -20,7 +20,7 @@ const ProLayout = dynamic(
   () => import("@ant-design/pro-components").then((mod) => mod.ProLayout),
   {
     ssr: false,
-  }
+  },
 );
 
 const isDev = process.env.NODE_ENV === "development";
@@ -45,6 +45,7 @@ const useLayoutProps: RunTimeLayoutConfig = ({
     location: {
       pathname,
     },
+    siderWidth: 256,
     menu: {
       locale: true,
       params: currentUser,
