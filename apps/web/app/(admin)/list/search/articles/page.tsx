@@ -35,7 +35,7 @@ const Articles: FC = () => {
     },
     {
       loadMore: true,
-    }
+    },
   );
 
   const list = data?.list || [];
@@ -128,7 +128,7 @@ const Articles: FC = () => {
         label: item.name,
         value: item.id,
       })),
-    []
+    [],
   );
 
   return (
@@ -148,9 +148,9 @@ const Articles: FC = () => {
                 {categoryOptions
                   .filter(
                     (
-                      category
+                      category,
                     ): category is { value: string | number; label: string } =>
-                      category.value !== undefined && category.value !== null
+                      category.value !== undefined && category.value !== null,
                   )
                   .map((category) => (
                     <TagSelect.Option
@@ -212,7 +212,7 @@ const Articles: FC = () => {
       </Card>
       <Card
         style={{ marginTop: 24 }}
-        bordered={false}
+        variant="borderless"
         bodyStyle={{ padding: "8px 32px 32px 32px" }}
       >
         <List<ListItemDataType>

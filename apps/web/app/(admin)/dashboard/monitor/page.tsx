@@ -4,7 +4,7 @@ import { GridContent } from "@ant-design/pro-components";
 import { useRequest } from "@/services";
 import { Card, Col, Progress, Row, Skeleton, Statistic } from "antd";
 import numeral from "numeral";
-import { type FC } from "react";
+import { useCallback, useEffect, useRef, useState, type FC } from "react";
 import { queryTags } from "./service";
 import useStyles from "./style.style";
 import dynamic from "next/dynamic";
@@ -26,6 +26,20 @@ const ActiveChart = dynamic(() => import("./components/ActiveChart"), {
 const { Timer } = Statistic;
 const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
 
+function fixedZero(val: number) {
+  return val * 1 < 10 ? `0${val}` : val;
+}
+function getActiveData() {
+  const activeData = [];
+  for (let i = 0; i < 24; i += 1) {
+    activeData.push({
+      x: `${fixedZero(i)}:00`,
+      y: Math.floor(Math.random() * 200) + i * 50,
+    });
+  }
+  return activeData;
+}
+
 const Monitor: FC = () => {
   const { styles } = useStyles();
   const { loading, data } = useRequest(queryTags);
@@ -36,6 +50,30 @@ const Monitor: FC = () => {
       weight: item.value,
     };
   });
+
+  const timerRef = useRef<number | null>(null);
+  const requestRef = useRef<number | null>(null);
+  const [activeData, setActiveData] = useState<{ x: string; y: number }[]>([]);
+  const loopData = useCallback(() => {
+    requestRef.current = requestAnimationFrame(() => {
+      timerRef.current = window.setTimeout(() => {
+        setActiveData(getActiveData());
+        loopData();
+      }, 2000);
+    });
+  }, []);
+
+  useEffect(() => {
+    setActiveData(getActiveData());
+    loopData();
+    return () => {
+      clearTimeout(timerRef.current as number);
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
+    };
+  }, [loopData]);
+
   return (
     <GridContent>
       <Row gutter={24}>
@@ -90,7 +128,7 @@ const Monitor: FC = () => {
             }}
             variant="borderless"
           >
-            <ActiveChart />
+            <ActiveChart data={activeData || []} />
           </Card>
           <Card
             title="券核效率"

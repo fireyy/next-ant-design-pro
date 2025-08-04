@@ -90,7 +90,7 @@ const Projects: FC = () => {
   };
   return (
     <div className={styles.coverCardList}>
-      <Card bordered={false}>
+      <Card variant="borderless">
         <Form
           layout="inline"
           onValuesChange={(_, values) => {
@@ -111,9 +111,9 @@ const Projects: FC = () => {
                 {categoryOptions
                   .filter(
                     (
-                      category
+                      category,
                     ): category is { value: string | number; label: string } =>
-                      category.value !== undefined && category.value !== null
+                      category.value !== undefined && category.value !== null,
                   )
                   .map((category) => (
                     <TagSelect.Option

@@ -6,6 +6,7 @@ import React from "react";
 import type { DataItem } from "../data.d";
 import NumberInfo from "./NumberInfo";
 import Trend from "./Trend";
+import Link from "next/link";
 
 const TopSearch = ({
   loading,
@@ -28,7 +29,7 @@ const TopSearch = ({
       title: "搜索关键词",
       dataIndex: "keyword",
       key: "keyword",
-      render: (text: React.ReactNode) => <a href="/">{text}</a>,
+      render: (text: React.ReactNode) => <Link href="/">{text}</Link>,
     },
     {
       title: "用户数",
@@ -40,7 +41,7 @@ const TopSearch = ({
         },
         b: {
           count: number;
-        }
+        },
       ) => a.count - b.count,
     },
     {
@@ -53,13 +54,13 @@ const TopSearch = ({
         },
         b: {
           range: number;
-        }
+        },
       ) => a.range - b.range,
       render: (
         text: React.ReactNode,
         record: {
           status: number;
-        }
+        },
       ) => (
         <Trend flag={record.status === 1 ? "down" : "up"}>
           <span

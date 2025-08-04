@@ -1,45 +1,13 @@
 import { Area } from "@ant-design/plots";
 import { Statistic } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
 import useStyles from "./index.style";
 
-function fixedZero(val: number) {
-  return val * 1 < 10 ? `0${val}` : val;
-}
-function getActiveData() {
-  const activeData = [];
-  for (let i = 0; i < 24; i += 1) {
-    activeData.push({
-      x: `${fixedZero(i)}:00`,
-      y: Math.floor(Math.random() * 200) + i * 50,
-    });
-  }
-  return activeData;
-}
-
-const ActiveChart = () => {
-  const timerRef = useRef<number | null>(null);
-  const requestRef = useRef<number | null>(null);
+const ActiveChart = ({
+  data: activeData,
+}: {
+  data: { x: string; y: number }[];
+}) => {
   const { styles } = useStyles();
-  const [activeData, setActiveData] = useState<{ x: string; y: number }[]>([]);
-  const loopData = useCallback(() => {
-    requestRef.current = requestAnimationFrame(() => {
-      timerRef.current = window.setTimeout(() => {
-        setActiveData(getActiveData());
-        loopData();
-      }, 2000);
-    });
-  }, []);
-
-  useEffect(() => {
-    loopData();
-    return () => {
-      clearTimeout(timerRef.current as number);
-      if (requestRef.current) {
-        cancelAnimationFrame(requestRef.current);
-      }
-    };
-  }, [loopData]);
 
   return (
     <div className={styles.activeChart}>
@@ -49,7 +17,6 @@ const ActiveChart = () => {
           marginTop: 32,
         }}
       >
-        {/* FIXME: 面积图不显示 */}
         <Area
           padding={[0, 0, 0, 0]}
           xField="x"

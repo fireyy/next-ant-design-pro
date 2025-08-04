@@ -104,7 +104,7 @@ export default function BasicList() {
       onSuccess: (result) => {
         mutate(result);
       },
-    }
+    },
   );
   const list = listData?.list || [];
   const paginationProps = {
@@ -124,7 +124,7 @@ export default function BasicList() {
   };
   const editAndDelete = (
     key: string | number,
-    currentItem: BasicListItemDataType
+    currentItem: BasicListItemDataType,
   ) => {
     if (key === "edit") showEditModal(currentItem);
     else if (key === "delete") {
@@ -193,7 +193,7 @@ export default function BasicList() {
     <div>
       <PageContainer>
         <div className={styles.standardList}>
-          <Card bordered={false}>
+          <Card variant="borderless">
             <Row>
               <Col sm={8} xs={24}>
                 <Info title="我的待办" value="8个任务" bordered />

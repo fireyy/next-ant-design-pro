@@ -65,65 +65,54 @@ const Basic: FC = () => {
       amount,
     });
   }
-  const renderContent = (value: any, _: any, index: any) => {
-    const obj: {
-      children: any;
-      props: {
-        colSpan?: number;
-      };
-    } = {
-      children: value,
-      props: {},
+  const onCell = (value: any, index: any) => {
+    return {
+      colSpan: index === basicGoods.length ? 0 : 1,
     };
-    if (index === basicGoods.length) {
-      obj.props.colSpan = 0;
-    }
-    return obj;
   };
   const goodsColumns: ProColumns<BasicGood>[] = [
     {
       title: "商品编号",
       dataIndex: "id",
       key: "id",
-      // FIXME: Warning: `columns.render` return cell props is deprecated with perf issue, please use `onCell` instead.
+      onCell: (record: BasicGood, index: number | undefined) => {
+        return {
+          colSpan: index === basicGoods.length ? 4 : 1,
+        };
+      },
       render: (text: React.ReactNode, _: any, index: number) => {
         if (index < basicGoods.length) {
           return <span>{text}</span>;
         }
-        return {
-          children: (
-            <span
-              style={{
-                fontWeight: 600,
-              }}
-            >
-              总计
-            </span>
-          ),
-          props: {
-            colSpan: 4,
-          },
-        };
+        return (
+          <span
+            style={{
+              fontWeight: 600,
+            }}
+          >
+            总计
+          </span>
+        );
       },
     },
     {
       title: "商品名称",
       dataIndex: "name",
       key: "name",
-      render: renderContent,
+      onCell,
     },
     {
       title: "商品条码",
       dataIndex: "barcode",
       key: "barcode",
-      render: renderContent,
+      onCell,
     },
     {
       title: "单价",
       dataIndex: "price",
       key: "price",
       align: "right" as "left" | "right" | "center",
-      render: renderContent,
+      onCell,
     },
     {
       title: "数量（件）",

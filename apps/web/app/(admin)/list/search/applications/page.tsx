@@ -92,7 +92,7 @@ const Applications: FC = () => {
 
   return (
     <div className={styles.filterCardList}>
-      <Card bordered={false}>
+      <Card variant="borderless">
         <Form
           onValuesChange={(_, values) => {
             run(values);
@@ -110,9 +110,9 @@ const Applications: FC = () => {
                 {categoryOptions
                   .filter(
                     (
-                      category
+                      category,
                     ): category is { value: string | number; label: string } =>
-                      category.value !== undefined && category.value !== null
+                      category.value !== undefined && category.value !== null,
                   )
                   .map((category) => (
                     <TagSelect.Option

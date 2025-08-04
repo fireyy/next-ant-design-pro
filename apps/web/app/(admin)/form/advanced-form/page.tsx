@@ -106,7 +106,7 @@ const AdvancedForm: FC = () => {
         <Popover
           title="表单校验信息"
           content={errorList}
-          overlayClassName={styles.errorPopover}
+          classNames={{ root: styles.errorPopover }}
           trigger="click"
           getPopupContainer={(trigger: HTMLElement) => {
             if (trigger?.parentNode) {
