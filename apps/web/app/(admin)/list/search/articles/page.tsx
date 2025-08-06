@@ -12,8 +12,8 @@ import type { FC } from "react";
 import React, { useMemo } from "react";
 import { categoryOptions } from "../../mock";
 import ArticleListContent from "./components/ArticleListContent";
-import StandardFormRow from "./components/StandardFormRow";
-import TagSelect from "./components/TagSelect";
+import StandardFormRow from "@/components/StandardFormRow";
+import TagSelect from "@/components/TagSelect";
 import type { ListItemDataType } from "./data";
 import { queryFakeList } from "./service";
 import useStyles from "./style.style";
@@ -46,28 +46,31 @@ const Articles: FC = () => {
     });
   };
 
-  const owners = [
-    {
-      id: "wzj",
-      name: "我自己",
-    },
-    {
-      id: "wjh",
-      name: "吴家豪",
-    },
-    {
-      id: "zxx",
-      name: "周星星",
-    },
-    {
-      id: "zly",
-      name: "赵丽颖",
-    },
-    {
-      id: "ym",
-      name: "姚明",
-    },
-  ];
+  const owners = useMemo(
+    () => [
+      {
+        id: "wzj",
+        name: "我自己",
+      },
+      {
+        id: "wjh",
+        name: "吴家豪",
+      },
+      {
+        id: "zxx",
+        name: "周星星",
+      },
+      {
+        id: "zly",
+        name: "赵丽颖",
+      },
+      {
+        id: "ym",
+        name: "姚明",
+      },
+    ],
+    [],
+  );
 
   const IconText: React.FC<{
     type: string;
@@ -128,7 +131,7 @@ const Articles: FC = () => {
         label: item.name,
         value: item.id,
       })),
-    [],
+    [owners],
   );
 
   return (

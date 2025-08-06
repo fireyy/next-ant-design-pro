@@ -1,7 +1,7 @@
 "use client";
 
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import HeaderDropdown from "@/components/HeaderDropdown";
 import type { MenuProps } from "antd";
 import { getLocale, getAllLocales, setLocale } from "./localeExports";
@@ -377,7 +377,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
         label: key,
         icon: "🌐",
         title: key,
-      }
+      },
   );
 
   const allLangUIConfig =
@@ -423,10 +423,14 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
     ...style,
   };
 
+  const currentLang = useMemo(() => {
+    return allLangUIConfig.find((localeObj) => localeObj.lang === selectedLang);
+  }, [allLangUIConfig, selectedLang]);
+
   return (
     <HeaderDropdown {...dropdownProps} placement="bottomRight" {...restProps}>
       <span className={globalIconClassName} style={inlineStyle}>
-        <i className="anticon" title={allLangUIConfig[selectedLang]?.title}>
+        <i className="anticon" title={currentLang?.label || ""}>
           {icon ? (
             icon
           ) : (

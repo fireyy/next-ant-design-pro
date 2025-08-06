@@ -1,8 +1,8 @@
-import { Avatar, Tooltip } from 'antd';
-import classNames from 'classnames';
-import React from 'react';
-import useStyles from './index.style';
-export declare type SizeType = number | 'small' | 'default' | 'large';
+import { Avatar, Tooltip } from "antd";
+import classNames from "classnames";
+import React from "react";
+import useStyles from "./index.style";
+export declare type SizeType = number | "small" | "default" | "large";
 export type AvatarItemProps = {
   tips: React.ReactNode;
   src: string;
@@ -20,11 +20,14 @@ export type AvatarListProps = {
     | React.ReactElement<AvatarItemProps>
     | React.ReactElement<AvatarItemProps>[];
 };
-const avatarSizeToClassName = (size: SizeType | 'mini', styles: any) =>
+const avatarSizeToClassName = (
+  size: SizeType | "mini",
+  styles: Record<string, string>,
+) =>
   classNames(styles.avatarItem, {
-    [styles.avatarItemLarge]: size === 'large',
-    [styles.avatarItemSmall]: size === 'small',
-    [styles.avatarItemMini]: size === 'mini',
+    [styles.avatarItemLarge]: size === "large",
+    [styles.avatarItemSmall]: size === "small",
+    [styles.avatarItemMini]: size === "mini",
   });
 
 const Item: React.FC<AvatarItemProps> = ({
@@ -35,7 +38,7 @@ const Item: React.FC<AvatarItemProps> = ({
 }) => {
   const { styles } = useStyles();
 
-  const cls = avatarSizeToClassName(size || 'default', styles);
+  const cls = avatarSizeToClassName(size || "default", styles);
 
   return (
     <li className={cls} onClick={onClick}>
@@ -45,7 +48,7 @@ const Item: React.FC<AvatarItemProps> = ({
             src={src}
             size={size}
             style={{
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
           />
         </Tooltip>
@@ -57,7 +60,13 @@ const Item: React.FC<AvatarItemProps> = ({
 };
 const AvatarList: React.FC<AvatarListProps> & {
   Item: typeof Item;
-} = ({ children, size, maxLength = 5, excessItemsStyle, ...other }) => {
+} = ({
+  children,
+  size,
+  maxLength = 5,
+  excessItemsStyle,
+  ...other
+}: AvatarListProps) => {
   const { styles } = useStyles();
   const numOfChildren = React.Children.count(children);
   const numToShow = maxLength >= numOfChildren ? numOfChildren : maxLength;
@@ -71,7 +80,7 @@ const AvatarList: React.FC<AvatarListProps> & {
     }),
   );
   if (numToShow < numOfChildren) {
-    const cls = avatarSizeToClassName(size || 'default', styles);
+    const cls = avatarSizeToClassName(size || "default", styles);
     childrenWithProps.push(
       <li key="exceed" className={cls}>
         <Avatar

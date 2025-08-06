@@ -5,13 +5,15 @@ import type {
 
 export type ISettings = Partial<LayoutSettings>;
 
+export type ILayout = ProLayoutProps & {
+  pwa?: boolean;
+  logo?: string;
+};
+
 /**
  * @name
  */
-const Settings: ProLayoutProps & {
-  pwa?: boolean;
-  logo?: string;
-} = {
+const Settings: ILayout = {
   navTheme: "light",
   // 拂晓蓝
   colorPrimary: "#1890ff",

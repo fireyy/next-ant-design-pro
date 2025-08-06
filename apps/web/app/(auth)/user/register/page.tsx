@@ -15,6 +15,7 @@ import {
   Select,
   Space,
 } from "antd";
+import type { FormRule } from "antd";
 import type { Store } from "antd/es/form/interface";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
@@ -36,10 +37,10 @@ const passwordProgressMap: {
 };
 const Register: FC = () => {
   const { styles } = useStyles();
-  const [count, setCount]: [number, any] = useState(0);
-  const [open, setVisible]: [boolean, any] = useState(false);
-  const [prefix, setPrefix]: [string, any] = useState("86");
-  const [popover, setPopover]: [boolean, any] = useState(false);
+  const [count, setCount] = useState(0);
+  const [open, setVisible] = useState(false);
+  const [prefix, setPrefix] = useState("86");
+  const [popover, setPopover] = useState(false);
   const confirmDirty = false;
   let interval: number | undefined;
   const router = useRouter();
@@ -104,14 +105,14 @@ const Register: FC = () => {
   const onFinish = (values: Store) => {
     register(values);
   };
-  const checkConfirm = (_: any, value: string) => {
+  const checkConfirm = (_: FormRule, value: string) => {
     const promise = Promise;
     if (value && value !== form.getFieldValue("password")) {
       return promise.reject("两次输入的密码不匹配!");
     }
     return promise.resolve();
   };
-  const checkPassword = (_: any, value: string) => {
+  const checkPassword = (_: FormRule, value: string) => {
     const promise = Promise;
     // 没有值的情况
     if (!value) {

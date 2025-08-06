@@ -7,7 +7,7 @@ import { atomWithStorage, unwrap } from "jotai/utils";
 type Selector<T> = (get: Getter) => T | Promise<T>;
 
 export const selectAtomWithSwr = <T>(
-  selector: Selector<T>
+  selector: Selector<T>,
 ): Atom<T | Promise<T>> => {
   const baseAtom = atom((get) => selector(get));
   const unwrappedAtom = unwrap(baseAtom, (prev) => prev);
@@ -28,7 +28,7 @@ export const globalUserInfo = atom(
   (get) => get(userInfoAtom) ?? get(fetchUserInfoAtom),
   (get, set, newVal: IUserInfo) => {
     set(userInfoAtom, newVal);
-  }
+  },
 );
 
 const defaultSettings = Settings as ISettings;
@@ -38,10 +38,8 @@ export const globalSettings = atomWithStorage(
   undefined,
   {
     getOnInit: true,
-  }
+  },
 );
-
-const localeAtom = atomWithStorage("locale", "zh-CN");
 
 export const initialState = atom({
   currentUser: globalUserInfo,

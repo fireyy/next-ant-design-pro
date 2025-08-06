@@ -15,7 +15,7 @@ export interface TagSelectOptionProps {
 }
 const TagSelectOption: React.FC<TagSelectOptionProps> & {
   isTagSelectOption: boolean;
-} = ({ children, checked, onChange, value }) => (
+} = ({ children, checked, onChange, value }: TagSelectOptionProps) => (
   <CheckableTag
     checked={!!checked}
     key={value}
@@ -50,7 +50,7 @@ export interface TagSelectProps {
 }
 const TagSelect: FC<TagSelectProps> & {
   Option: typeof TagSelectOption;
-} = (props) => {
+} = (props: TagSelectProps) => {
   const { styles } = useStyles();
   const {
     children,
@@ -68,7 +68,7 @@ const TagSelect: FC<TagSelectProps> & {
       value: props.value,
       defaultValue: props.defaultValue,
       onChange: props.onChange,
-    }
+    },
   );
 
   const isTagSelectOption = (node: TagSelectOptionElement) =>
@@ -77,7 +77,7 @@ const TagSelect: FC<TagSelectProps> & {
       node.type.displayName === "TagSelectOption");
   const getAllTags = () => {
     const childrenArray = React.Children.toArray(
-      children
+      children,
     ) as TagSelectOptionElement[];
     const checkedTags = childrenArray
       .filter((child) => isTagSelectOption(child))

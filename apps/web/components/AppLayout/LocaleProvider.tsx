@@ -6,7 +6,6 @@ import {
   RawIntlProvider,
   getLocale,
   getDirection,
-  setIntl,
   getIntl,
   localeInfo,
   event,

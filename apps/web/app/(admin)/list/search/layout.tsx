@@ -2,12 +2,7 @@
 import { PageContainer } from "@ant-design/pro-components";
 import { usePathname, useRouter } from "next/navigation";
 import { Input } from "antd";
-import type { FC } from "react";
 import React from "react";
-
-type SearchProps = {
-  children?: React.ReactNode;
-};
 
 const tabList = [
   {

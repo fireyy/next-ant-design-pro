@@ -21,8 +21,8 @@ import numeral from "numeral";
 import type { FC } from "react";
 import React from "react";
 import { categoryOptions } from "../../mock";
-import StandardFormRow from "./components/StandardFormRow";
-import TagSelect from "./components/TagSelect";
+import StandardFormRow from "@/components/StandardFormRow";
+import TagSelect from "@/components/TagSelect";
 import type { ListItemDataType } from "./data.d";
 import { queryFakeList } from "./service";
 import useStyles from "./style.style";
@@ -79,9 +79,16 @@ const CardInfo: React.FC<{
     </div>
   );
 };
+
+interface FieldsValue {
+  category?: string[];
+  author?: string;
+  rate?: string;
+}
+
 const Applications: FC = () => {
   const { styles } = useStyles();
-  const { data, loading, run } = useRequest((values: any) => {
+  const { data, loading, run } = useRequest((values: Partial<FieldsValue>) => {
     console.log("form data", values);
     return queryFakeList({
       count: 8,
@@ -93,8 +100,8 @@ const Applications: FC = () => {
   return (
     <div className={styles.filterCardList}>
       <Card variant="borderless">
-        <Form
-          onValuesChange={(_, values) => {
+        <Form<FieldsValue>
+          onValuesChange={(_, values: Partial<FieldsValue>) => {
             run(values);
           }}
         >

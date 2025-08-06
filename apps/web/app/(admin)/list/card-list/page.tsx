@@ -4,6 +4,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { PageContainer } from "@ant-design/pro-components";
 import { useRequest } from "@/services";
 import { Button, Card, List, Typography } from "antd";
+import Image from "next/image";
 import type { CardListItemDataType } from "./data.d";
 import { queryFakeList } from "./service";
 import useStyles from "./style.style";
@@ -26,23 +27,29 @@ const CardList = () => {
       </p>
       <div className={styles.contentLink}>
         <a>
-          <img
+          <Image
             alt=""
             src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
+            width={24}
+            height={24}
           />{" "}
           快速开始
         </a>
         <a>
-          <img
+          <Image
             alt=""
             src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg"
+            width={24}
+            height={24}
           />{" "}
           产品简介
         </a>
         <a>
-          <img
+          <Image
             alt=""
             src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
+            width={24}
+            height={24}
           />{" "}
           产品文档
         </a>
@@ -51,9 +58,11 @@ const CardList = () => {
   );
   const extraContent = (
     <div className={styles.extraImg}>
-      <img
+      <Image
         alt="这是一个标题"
         src="https://gw.alipayobjects.com/zos/rmsportal/RzwpdLnhmvDJToTdfDPe.png"
+        width={155}
+        height={103}
       />
     </div>
   );
@@ -88,11 +97,15 @@ const CardList = () => {
                   >
                     <Card.Meta
                       avatar={
-                        <img
-                          alt=""
-                          className={styles.cardAvatar}
-                          src={item.avatar}
-                        />
+                        item.avatar ? (
+                          <Image
+                            alt=""
+                            className={styles.cardAvatar}
+                            src={item.avatar}
+                            width={48}
+                            height={48}
+                          />
+                        ) : null
                       }
                       title={<a>{item.title}</a>}
                       description={

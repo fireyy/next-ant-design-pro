@@ -36,7 +36,7 @@ const handleAdd = async (fields: TableListItem) => {
     hide();
     message.success("添加成功");
     return true;
-  } catch (_error) {
+  } catch {
     hide();
     message.error("添加失败请重试！");
     return false;
@@ -50,7 +50,7 @@ const handleAdd = async (fields: TableListItem) => {
 
 const handleUpdate = async (
   fields: FormValueType,
-  currentRow?: TableListItem
+  currentRow?: TableListItem,
 ) => {
   const hide = message.loading("正在配置");
 
@@ -62,7 +62,7 @@ const handleUpdate = async (
     hide();
     message.success("配置成功");
     return true;
-  } catch (_error) {
+  } catch {
     hide();
     message.error("配置失败请重试！");
     return false;
@@ -85,7 +85,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
     hide();
     message.success("删除成功，即将刷新");
     return true;
-  } catch (_error) {
+  } catch {
     hide();
     message.error("删除失败，请重试");
     return false;
@@ -243,7 +243,7 @@ const TableList: React.FC = () => {
                 服务调用次数总计{" "}
                 {selectedRowsState.reduce(
                   (pre, item) => pre + (item.callNo ?? 0),
-                  0
+                  0,
                 )}{" "}
                 万
               </span>

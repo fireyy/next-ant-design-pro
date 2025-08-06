@@ -65,7 +65,7 @@ const Basic: FC = () => {
       amount,
     });
   }
-  const onCell = (value: any, index: any) => {
+  const onCell = (value: BasicGood, index: number | undefined) => {
     return {
       colSpan: index === basicGoods.length ? 0 : 1,
     };
@@ -80,7 +80,7 @@ const Basic: FC = () => {
           colSpan: index === basicGoods.length ? 4 : 1,
         };
       },
-      render: (text: React.ReactNode, _: any, index: number) => {
+      render: (text: React.ReactNode, _: BasicGood, index: number) => {
         if (index < basicGoods.length) {
           return <span>{text}</span>;
         }
@@ -119,7 +119,7 @@ const Basic: FC = () => {
       dataIndex: "num",
       key: "num",
       align: "right" as "left" | "right" | "center",
-      render: (text: React.ReactNode, _: any, index: number) => {
+      render: (text: React.ReactNode, _: BasicGood, index: number) => {
         if (index < basicGoods.length) {
           return text;
         }
@@ -139,7 +139,7 @@ const Basic: FC = () => {
       dataIndex: "amount",
       key: "amount",
       align: "right" as "left" | "right" | "center",
-      render: (text: React.ReactNode, _: any, index: number) => {
+      render: (text: React.ReactNode, _: BasicGood, index: number) => {
         if (index < basicGoods.length) {
           return text;
         }

@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [new URL('https://gw.alipayobjects.com/**')],
+  },
   async redirects() {
     return [
       {

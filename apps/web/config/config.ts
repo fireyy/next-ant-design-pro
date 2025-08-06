@@ -1,4 +1,27 @@
-import defaultSettings from "./defaultSettings";
+import defaultSettings, { ISettings } from "./defaultSettings";
+import { IntlCache, createIntl } from "react-intl";
+
+type OptionalIntlConfig = Omit<
+  Parameters<typeof createIntl>[0],
+  "locale" | "defaultLocale"
+>;
+export interface IConfig {
+  title: string;
+  layout?: {
+    locale: boolean;
+  } & ISettings;
+  locale?: {
+    default: string;
+    antd: boolean;
+    baseNavigator: boolean;
+    getLocale?: () => string;
+    cache?: IntlCache;
+    intlConfig?: OptionalIntlConfig;
+  };
+  request?: {
+    baseURL: string;
+  };
+}
 
 export default {
   /**
@@ -18,6 +41,11 @@ export default {
     antd: true,
     // default true, when it is true, will use `navigator.language` overwrite default
     baseNavigator: true,
+    // getLocale: () => {
+    //   return "zh-CN";
+    // },
+    // react-intl config
+    // intlConfig: {}
   },
   /**
    * @name 网络请求配置
@@ -26,4 +54,4 @@ export default {
   request: {
     baseURL: process.env.NEXT_PUBLIC_API_URL || "",
   },
-};
+} as IConfig;

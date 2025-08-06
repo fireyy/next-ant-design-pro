@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -159,7 +160,7 @@ export default function Login() {
             minWidth: 280,
             maxWidth: "75vw",
           }}
-          logo={<img alt="logo" src={Settings.logo} />}
+          logo={<Image alt="logo" src={Settings.logo} width={44} height={44} />}
           title="Ant Design"
           subTitle={intl.formatMessage({
             id: "pages.layouts.userLayout.title",

@@ -30,24 +30,13 @@ function formatIcon(name: string) {
 }
 
 export function patchRoutes(routes: API.MenuDataItem[]): API.MenuDataItem[] {
-  //   return routes.map((item) => {
-  //     const { icon } = item;
-  //     if (icon && typeof icon === "string") {
-  //       const upperIcon = formatIcon(icon);
-  //       if (icons[upperIcon] || icons[upperIcon + "Outlined"]) {
-  //         item.icon = React.createElement(
-  //           icons[upperIcon] || icons[upperIcon + "Outlined"]
-  //         );
-  //       }
-  //     }
-  //   });
-  routes.forEach((route, key) => {
+  routes.forEach((route) => {
     const { icon } = route;
     if (icon && typeof icon === "string") {
       const upperIcon = formatIcon(icon);
       if (icons[upperIcon] || icons[upperIcon + "Outlined"]) {
         route.icon = React.createElement(
-          icons[upperIcon] || icons[upperIcon + "Outlined"]
+          icons[upperIcon] || icons[upperIcon + "Outlined"],
         );
       }
     }

@@ -1,5 +1,6 @@
 import { createIntl, IntlShape, MessageDescriptor } from "react-intl";
 import EventEmitter from "event-emitter";
+import { config } from "@/config";
 
 export { createIntl };
 export {
@@ -48,10 +49,14 @@ import zhCN0 from "antd/es/locale/zh_CN";
 import lang_zhCN0 from "@/locales/zh-CN.ts";
 import zhTW0 from "antd/es/locale/zh_TW";
 import lang_zhTW0 from "@/locales/zh-TW.ts";
+import type { Locale } from "antd/es/locale";
 
-const flattenMessages = (nestedMessages: Record<string, any>, prefix = "") => {
+const flattenMessages = (
+  nestedMessages: Record<string, string>,
+  prefix = "",
+) => {
   return Object.keys(nestedMessages).reduce(
-    (messages: Record<string, any>, key) => {
+    (messages: Record<string, string>, key) => {
       const value = nestedMessages[key];
       const prefixedKey = prefix ? `${prefix}.${key}` : key;
       if (typeof value === "string") {
@@ -61,11 +66,18 @@ const flattenMessages = (nestedMessages: Record<string, any>, prefix = "") => {
       }
       return messages;
     },
-    {}
+    {},
   );
 };
 
-export const localeInfo: { [key: string]: any } = {
+type ILocaleInfo = {
+  messages: Record<string, string>;
+  locale: string;
+  antd: Locale;
+  momentLocale: string;
+};
+
+export const localeInfo: { [key: string]: ILocaleInfo } = {
   "bn-BD": {
     messages: {
       ...flattenMessages(lang_bnBD0),
@@ -156,11 +168,11 @@ export const localeInfo: { [key: string]: any } = {
  */
 export const addLocale = (
   name: string,
-  messages: object,
+  messages: Record<string, string>,
   extraLocales: {
     momentLocale: string;
-    antd: import("antd/es/locale").Locale;
-  }
+    antd: Locale;
+  },
 ) => {
   if (!name) {
     return;
@@ -188,14 +200,10 @@ export const addLocale = (
   }
 };
 
-const applyRuntimeLocalePlugin = (initialValue: any) => {
-  return initialValue;
-};
-
 const _createIntl = (locale: string) => {
-  const runtimeLocale = applyRuntimeLocalePlugin(localeInfo[locale]);
-  const { cache, ...config } = runtimeLocale;
-  return createIntl(config, cache);
+  const { cache } = config.locale || {};
+  const intlConfig = localeInfo[locale];
+  return createIntl(intlConfig, cache);
 };
 
 /**
@@ -218,7 +226,7 @@ export const getIntl = (locale?: string, changeIntl?: boolean) => {
   // 不存在需要一个报错提醒
   console.warn(
     !locale || !!localeInfo[locale],
-    `The current popular language does not exist, please check the locales folder!`
+    `The current popular language does not exist, please check the locales folder!`,
   );
   // 使用 zh-CN
   if (localeInfo["zh-CN"]) {
@@ -245,10 +253,9 @@ export const setIntl = (locale: string) => {
  * @returns string
  */
 export const getLocale = () => {
-  const runtimeLocale = applyRuntimeLocalePlugin({});
-  // runtime getLocale for user define
-  if (typeof runtimeLocale?.getLocale === "function") {
-    return runtimeLocale.getLocale();
+  // getLocale for user define in config.ts
+  if (typeof config.locale?.getLocale === "function") {
+    return config.locale?.getLocale();
   }
 
   // Check if it's running on server side
@@ -265,12 +272,12 @@ export const getLocale = () => {
       ? window.localStorage.getItem("umi_locale")
       : "";
   // support baseNavigator, default true
-  let browserLang;
   const isNavigatorLanguageValid =
     typeof navigator !== "undefined" && typeof navigator.language === "string";
-  browserLang = isNavigatorLanguageValid
-    ? navigator.language.split("-").join("-")
-    : "";
+  const browserLang =
+    config?.locale?.baseNavigator && isNavigatorLanguageValid
+      ? navigator.language.split("-").join("-")
+      : "";
   return lang || browserLang || "zh-CN";
 };
 
@@ -347,10 +354,9 @@ let firstWaring = true;
  * @param values { [key:string] : string }
  * @returns string
  */
-// @ts-ignore
-export const formatMessage: IntlShape["formatMessage"] = (
+export const formatMessage = (
   descriptor: MessageDescriptor,
-  values: any
+  values?: Record<string, string>,
 ) => {
   if (firstWaring) {
     console.warn(
@@ -360,7 +366,7 @@ export const formatMessage: IntlShape["formatMessage"] = (
   使用此 api 会造成切换语言的时候无法自动刷新，请使用 useIntl 或 injectIntl。
   
   http://j.mp/37Fkd5Q
-        `
+        `,
     );
     firstWaring = false;
   }
