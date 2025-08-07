@@ -11,7 +11,7 @@ import type { DefaultOptionType } from "antd/es/select";
 import type { FC } from "react";
 import React, { useMemo } from "react";
 import { categoryOptions } from "../../mock";
-import ArticleListContent from "./components/ArticleListContent";
+import ArticleListContent from "@/components/ArticleListContent";
 import StandardFormRow from "@/components/StandardFormRow";
 import TagSelect from "@/components/TagSelect";
 import type { ListItemDataType } from "./data";

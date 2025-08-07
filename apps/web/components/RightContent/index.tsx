@@ -1,5 +1,6 @@
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { GithubFilled, QuestionCircleOutlined } from "@ant-design/icons";
 import { SelectLang as SelectLangComponent } from "@/lib/locales";
+import HelpContent from "@/components/HelpContent";
 
 export type SiderTheme = "light" | "dark";
 
@@ -14,9 +15,13 @@ export const SelectLang: React.FC = () => {
 };
 
 export const Question: React.FC = () => {
+  return <HelpContent />;
+};
+
+export const GithubLink: React.FC = () => {
   return (
     <a
-      href="https://pro.ant.design/docs/getting-started"
+      href="https://github.com/fireyy/next-ant-design-pro"
       target="_blank"
       rel="noreferrer"
       style={{
@@ -26,7 +31,7 @@ export const Question: React.FC = () => {
         color: "inherit",
       }}
     >
-      <QuestionCircleOutlined />
+      <GithubFilled />
     </a>
   );
 };

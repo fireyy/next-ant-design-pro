@@ -1,3 +1,13 @@
+export interface IRoute {
+  path: string;
+  absPath?: string;
+  file?: string;
+  id?: string;
+  parentId?: string;
+  layout?: boolean;
+  [key: string]: any;
+}
+
 const menuData = [
   {
     path: "/user",
@@ -10,24 +20,16 @@ const menuData = [
         component: "./user/login",
       },
       {
-        path: "/user",
-        redirect: "/user/login",
-      },
-      {
         name: "register-result",
-        icon: "smile",
+        layout: false,
         path: "/user/register-result",
         component: "./user/register-result",
       },
       {
         name: "register",
-        icon: "smile",
+        layout: false,
         path: "/user/register",
         component: "./user/register",
-      },
-      {
-        component: "404",
-        path: "/user/*",
       },
     ],
   },
@@ -36,10 +38,6 @@ const menuData = [
     name: "dashboard",
     icon: "dashboard",
     routes: [
-      {
-        path: "/dashboard",
-        redirect: "/dashboard/analysis",
-      },
       {
         name: "analysis",
         icon: "smile",
@@ -65,10 +63,6 @@ const menuData = [
     icon: "form",
     name: "form",
     routes: [
-      {
-        path: "/form",
-        redirect: "/form/basic-form",
-      },
       {
         name: "basic-form",
         icon: "smile",
@@ -100,10 +94,6 @@ const menuData = [
         component: "./list/search",
         routes: [
           {
-            path: "/list/search",
-            redirect: "/list/search/articles",
-          },
-          {
             name: "articles",
             icon: "smile",
             path: "/list/search/articles",
@@ -122,10 +112,6 @@ const menuData = [
             component: "./list/search/applications",
           },
         ],
-      },
-      {
-        path: "/list",
-        redirect: "/list/table-list",
       },
       {
         name: "table-list",
@@ -153,10 +139,6 @@ const menuData = [
     icon: "profile",
     routes: [
       {
-        path: "/profile",
-        redirect: "/profile/basic",
-      },
-      {
         name: "basic",
         icon: "smile",
         path: "/profile/basic",
@@ -176,10 +158,6 @@ const menuData = [
     path: "/result",
     routes: [
       {
-        path: "/result",
-        redirect: "/result/success",
-      },
-      {
         name: "success",
         icon: "smile",
         path: "/result/success",
@@ -198,10 +176,6 @@ const menuData = [
     icon: "warning",
     path: "/exception",
     routes: [
-      {
-        path: "/exception",
-        redirect: "/exception/403",
-      },
       {
         name: "403",
         icon: "smile",
@@ -228,10 +202,6 @@ const menuData = [
     path: "/account",
     routes: [
       {
-        path: "/account",
-        redirect: "/account/center",
-      },
-      {
         name: "center",
         icon: "smile",
         path: "/account/center",
@@ -244,14 +214,6 @@ const menuData = [
         component: "./account/settings",
       },
     ],
-  },
-  {
-    path: "/",
-    redirect: "/dashboard/analysis",
-  },
-  {
-    component: "404",
-    path: "/*",
   },
 ];
 

@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import type { FC } from "react";
 import { categoryOptions } from "../../mock";
-import AvatarList from "./components/AvatarList";
+import AvatarList from "@/components/AvatarList";
 import StandardFormRow from "@/components/StandardFormRow";
 import TagSelect from "@/components/TagSelect";
 import type { ListItemDataType } from "./data.d";
@@ -14,12 +14,18 @@ import useStyles from "./style.style";
 
 dayjs.extend(relativeTime);
 
+interface FieldsValue {
+  category?: string[];
+  author?: string;
+  rate?: string;
+}
+
 const FormItem = Form.Item;
 const { Paragraph } = Typography;
 const getKey = (id: string, index: number) => `${id}-${index}`;
 const Projects: FC = () => {
   const { styles } = useStyles();
-  const { data, loading, run } = useRequest((values: any) => {
+  const { data, loading, run } = useRequest((values: Partial<FieldsValue>) => {
     console.log("form data", values);
     return queryFakeList({
       count: 8,
@@ -91,7 +97,7 @@ const Projects: FC = () => {
   return (
     <div className={styles.coverCardList}>
       <Card variant="borderless">
-        <Form
+        <Form<FieldsValue>
           layout="inline"
           onValuesChange={(_, values) => {
             // 表单项变化时请求数据

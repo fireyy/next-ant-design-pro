@@ -104,11 +104,12 @@ declare namespace API {
   };
 
   type MenuDataItem = {
-    path: string;
+    path?: string;
     name?: string;
     icon?: string | React.ReactNode;
     layout?: boolean;
     routes?: MenuDataItem[];
+    children?: MenuDataItem[];
     redirect?: string;
     component?: string;
   };

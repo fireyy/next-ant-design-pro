@@ -1,20 +1,29 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { Skeleton } from "antd";
+import { Input, Skeleton, Space } from "antd";
 import { SettingDrawer } from "@ant-design/pro-components";
-import type { ProLayoutProps } from "@ant-design/pro-components";
-import { LinkOutlined } from "@ant-design/icons";
+import type { ProLayoutProps, MenuDataItem } from "@ant-design/pro-components";
+import { LinkOutlined, SearchOutlined } from "@ant-design/icons";
 import { AvatarDropdown, AvatarName, Footer, Question, SelectLang } from "..";
 import Link from "next/link";
 import { useAtom, useAtomValue } from "jotai";
 import { globalSettings, globalUserInfo } from "@/stores";
-import type { ISettings } from "@/config";
+import { config, type ISettings } from "@/config";
 import { getMenuData } from "@/services/api";
 import { useIntl } from "@/lib/locales";
 import { patchRoutes } from "@/lib/patchRoutes";
 import menuData from "@/config/routes";
 import dynamic from "next/dynamic";
+import SearchInput from "../SearchInput";
+import { GithubLink } from "../RightContent";
+import {
+  useState,
+  type CompositionEvent,
+  type ChangeEvent,
+  useMemo,
+} from "react";
+import { debounce } from "lodash";
 
 const ProLayout = dynamic(
   () => import("@ant-design/pro-components").then((mod) => mod.ProLayout),
@@ -37,6 +46,36 @@ type IGetLayoutProps = {
 
 type RunTimeLayoutConfig = (initData: IGetLayoutProps) => ProLayoutProps;
 
+const filterByMenuData = (
+  data: MenuDataItem[],
+  keyWord: string,
+): MenuDataItem[] =>
+  data
+    .map((item) => {
+      if (item.name?.includes(keyWord)) {
+        return { ...item };
+      }
+      const children = filterByMenuData(item.children || [], keyWord);
+      if (children.length > 0) {
+        return { ...item, children };
+      }
+      return undefined;
+    })
+    .filter((item) => item) as MenuDataItem[];
+
+// const getOpenKeysByMenuData = (data: API.MenuDataItem[]): string[] =>
+//   data.reduce((acc: string[], item) => {
+//     if (item.routes && item.routes.length > 0 && item.path) {
+//       acc.push(item.path);
+//       const routes = getOpenKeysByMenuData(item.routes || []);
+//       if (routes.length > 0) {
+//         return [...acc, ...routes];
+//       }
+//       return acc;
+//     }
+//     return acc;
+//   }, []) as string[];
+
 const useLayoutProps: RunTimeLayoutConfig = ({
   currentUser,
   settings,
@@ -44,13 +83,35 @@ const useLayoutProps: RunTimeLayoutConfig = ({
   const router = useRouter();
   const pathname = usePathname();
   const { formatMessage } = useIntl();
+  const [keyWord, setKeyWord] = useState("");
+  const [isComposing, setComposing] = useState(false);
+
+  const onMenuSearchChange = (value: string) => {
+    setKeyWord(value);
+  };
+
+  const handleMenuSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!isComposing) {
+      onMenuSearchChange(event.target.value);
+    }
+  };
+
+  const handleCompositionStart = () => {
+    setComposing(true);
+  };
+
+  const handleCompositionEnd = (event: CompositionEvent<HTMLInputElement>) => {
+    setComposing(false);
+    onMenuSearchChange(event.currentTarget.value);
+  };
+
   return {
     location: {
       pathname,
     },
     siderWidth: 256,
     menu: {
-      locale: true,
+      locale: config.layout?.menuLocale,
       params: currentUser,
       request: async () => {
         const { data } = isDev ? await getMenuData() : { data: menuData };
@@ -64,17 +125,28 @@ const useLayoutProps: RunTimeLayoutConfig = ({
       }
       if (menuItemProps.path && location.pathname !== menuItemProps.path) {
         return (
-          // handle wildcard route path, for example /slave/* from qiankun
-          <Link
-            href={menuItemProps.path.replace("/*", "")}
-            target={menuItemProps.target}
-          >
+          <Link href={menuItemProps.path} target={menuItemProps.target}>
             {defaultDom}
           </Link>
         );
       }
       return defaultDom;
     },
+    menuExtraRender: ({ collapsed }) =>
+      !collapsed && (
+        <Space align="center">
+          <Input
+            addonBefore={<SearchOutlined />}
+            placeholder="搜索菜单"
+            allowClear={true}
+            variant="filled"
+            onChange={debounce(handleMenuSearchChange, 200)}
+            onCompositionStart={handleCompositionStart}
+            onCompositionEnd={handleCompositionEnd}
+          />
+        </Space>
+      ),
+    postMenuData: (menus) => filterByMenuData(menus || [], keyWord),
     itemRender: (route, _, routes) => {
       const { title, path } = route;
       const last = routes[routes.length - 1];
@@ -85,8 +157,10 @@ const useLayoutProps: RunTimeLayoutConfig = ({
       }
       return <Link href={path || "/"}>{title}</Link>;
     },
-    actionsRender: () => [
+    actionsRender: (props) => [
+      props.layout !== "side" ? <SearchInput /> : undefined,
       <Question key="doc" />,
+      <GithubLink key="GithubFilled" />,
       <SelectLang key="SelectLang" />,
     ],
     avatarProps: {
@@ -139,6 +213,7 @@ const useLayoutProps: RunTimeLayoutConfig = ({
         ]
       : [],
     menuHeaderRender: undefined,
+    ...config.layout,
     ...settings,
   };
 };

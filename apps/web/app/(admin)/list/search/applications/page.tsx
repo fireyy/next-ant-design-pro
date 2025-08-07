@@ -101,6 +101,7 @@ const Applications: FC = () => {
     <div className={styles.filterCardList}>
       <Card variant="borderless">
         <Form<FieldsValue>
+          layout="inline"
           onValuesChange={(_, values: Partial<FieldsValue>) => {
             run(values);
           }}

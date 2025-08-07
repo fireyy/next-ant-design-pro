@@ -5,7 +5,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import React from "react";
 import type { ListItemDataType } from "../../data.d";
 import { queryFakeList } from "../../service";
-import AvatarList from "../AvatarList";
+import AvatarList from "@/components/AvatarList";
 import useStyles from "./index.style";
 
 dayjs.extend(relativeTime);

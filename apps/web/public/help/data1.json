@@ -1,0 +1,106 @@
+[
+  {
+    "valueType": "h1",
+    "children": "如何开始操作数据授权？"
+  },
+  {
+    "valueType": "text",
+    "children": "需要进行数据合作的数据提供方（数据源）和数据需求方双方都需要先安装部署"
+  },
+  {
+    "valueType": "inlineLink",
+    "children": {
+      "href": "https://www.alipay.com",
+      "children": "摩斯产品"
+    }
+  },
+  {
+    "valueType": "text",
+    "children": "节点。并将各自的摩斯计算节点、子账号等的版本信息、业务需求、数据量级（几行几列）等信息同步给到摩斯产运负责人。"
+  },
+  {
+    "valueType": "image",
+    "children": {
+      "src": "https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*Jj_qRqbIRqkAAAAAAAAAAAAADml6AQ/original",
+      "style": {
+        "maxWidth": 600
+      }
+    }
+  },
+  {
+    "valueType": "text",
+    "children": "需要进行数据合作的数据提供方（数据源）和数据需求方双方都需要先安装部署"
+  },
+  {
+    "valueType": "inlineLink",
+    "children": {
+      "href": "https://www.alipay.com",
+      "children": "摩斯产品"
+    }
+  },
+  {
+    "valueType": "text",
+    "children": "节点。并将各自的摩斯计算节点、子账号等的版本信息、业务需求、数据量级（几行几列）等信息同步给到摩斯产运负责人。"
+  },
+  {
+    "valueType": "image",
+    "children": {
+      "src": "https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*Jj_qRqbIRqkAAAAAAAAAAAAADml6AQ/original",
+      "style": {
+        "maxWidth": 600
+      }
+    }
+  },
+  {
+    "valueType": "text",
+    "children": "需要进行数据合作的数据提供方（数据源）和数据需求方双方都需要先安装部署"
+  },
+  {
+    "valueType": "inlineLink",
+    "children": {
+      "href": "https://www.alipay.com",
+      "children": "摩斯产品"
+    }
+  },
+  {
+    "valueType": "text",
+    "children": "节点。并将各自的摩斯计算节点、子账号等的版本信息、业务需求、数据量级（几行几列）等信息同步给到摩斯产运负责人。"
+  },
+  {
+    "valueType": "image",
+    "children": {
+      "src": "https://mdn.alipayobjects.com/huamei_gcee1x/afts/img/A*Jj_qRqbIRqkAAAAAAAAAAAAADml6AQ/original",
+      "style": {
+        "maxWidth": 600
+      }
+    }
+  },
+  {
+    "valueType": "h2",
+    "children": "相关问题"
+  },
+  {
+    "valueType": "link",
+    "children": {
+      "href": "www.alipay.com",
+      "children": "鹊凿平台DCI申领操作手册?"
+    }
+  },
+  {
+    "valueType": "link",
+    "children": {
+      "href": "www.alipay.com",
+      "children": "openAPI 注册工具?"
+    }
+  },
+  {
+    "valueType": "h2",
+    "children": "帮助视频"
+  },
+  {
+    "valueType": "video",
+    "children": {
+      "src": "https://mdn.alipayobjects.com/huamei_gcee1x/afts/file/A*oJOJRZwe00kAAAAAAAAAAAAADml6AQ"
+    }
+  }
+]

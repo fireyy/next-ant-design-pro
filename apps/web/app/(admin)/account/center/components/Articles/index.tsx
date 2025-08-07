@@ -4,7 +4,7 @@ import { List, Tag } from "antd";
 import React from "react";
 import type { ListItemDataType } from "../../data.d";
 import { queryFakeList } from "../../service";
-import ArticleListContent from "../ArticleListContent";
+import ArticleListContent from "@/components/ArticleListContent";
 import useStyles from "./index.style";
 
 const Articles: React.FC = () => {
