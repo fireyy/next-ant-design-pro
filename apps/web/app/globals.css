@@ -254,3 +254,11 @@ ol {
     transform: rotate(405deg);
   }
 }
+
+/* for text hightlight */
+.menu-highlight-mark {
+  background-color: #fff6c9;
+  padding: 0 0.2em;
+  font-weight: bolder;
+  border-radius: 4px;
+}

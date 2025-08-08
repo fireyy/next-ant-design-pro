@@ -41,6 +41,8 @@ export const globalSettings = atomWithStorage(
   },
 );
 
+export const openKeysAtom = atom<string[]>([]);
+
 export const initialState = atom({
   currentUser: globalUserInfo,
   settings: globalSettings,

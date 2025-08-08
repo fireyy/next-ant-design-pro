@@ -8,7 +8,7 @@ import { LinkOutlined, SearchOutlined } from "@ant-design/icons";
 import { AvatarDropdown, AvatarName, Footer, Question, SelectLang } from "..";
 import Link from "next/link";
 import { useAtom, useAtomValue } from "jotai";
-import { globalSettings, globalUserInfo } from "@/stores";
+import { globalSettings, globalUserInfo, openKeysAtom } from "@/stores";
 import { config, type ISettings } from "@/config";
 import { getMenuData } from "@/services/api";
 import { useIntl } from "@/lib/locales";
@@ -17,13 +17,9 @@ import menuData from "@/config/routes";
 import dynamic from "next/dynamic";
 import SearchInput from "../SearchInput";
 import { GithubLink } from "../RightContent";
-import {
-  useState,
-  type CompositionEvent,
-  type ChangeEvent,
-  useMemo,
-} from "react";
+import { useState, type CompositionEvent, type ChangeEvent } from "react";
 import { debounce } from "lodash";
+import { highlightText, defaultRenderMark } from "../highlight";
 
 const ProLayout = dynamic(
   () => import("@ant-design/pro-components").then((mod) => mod.ProLayout),
@@ -63,18 +59,18 @@ const filterByMenuData = (
     })
     .filter((item) => item) as MenuDataItem[];
 
-// const getOpenKeysByMenuData = (data: API.MenuDataItem[]): string[] =>
-//   data.reduce((acc: string[], item) => {
-//     if (item.routes && item.routes.length > 0 && item.path) {
-//       acc.push(item.path);
-//       const routes = getOpenKeysByMenuData(item.routes || []);
-//       if (routes.length > 0) {
-//         return [...acc, ...routes];
-//       }
-//       return acc;
-//     }
-//     return acc;
-//   }, []) as string[];
+const getOpenKeysByMenuData = (data: API.MenuDataItem[]): string[] =>
+  data.reduce((acc: string[], item) => {
+    if (item.routes && item.routes.length > 0 && item.path) {
+      acc.push(item.path);
+      const routes = getOpenKeysByMenuData(item.routes || []);
+      if (routes.length > 0) {
+        return [...acc, ...routes];
+      }
+      return acc;
+    }
+    return acc;
+  }, []) as string[];
 
 const useLayoutProps: RunTimeLayoutConfig = ({
   currentUser,
@@ -85,9 +81,20 @@ const useLayoutProps: RunTimeLayoutConfig = ({
   const { formatMessage } = useIntl();
   const [keyWord, setKeyWord] = useState("");
   const [isComposing, setComposing] = useState(false);
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
+  const [preOpenKeys, setPreOpenKeys] = useState<string[]>([]);
+  const [allKeys, setAllKeys] = useAtom(openKeysAtom);
 
   const onMenuSearchChange = (value: string) => {
     setKeyWord(value);
+    if (value !== "") {
+      if (openKeys.length < allKeys.length) {
+        setPreOpenKeys(openKeys);
+      }
+      setOpenKeys(allKeys);
+    } else {
+      setOpenKeys(preOpenKeys);
+    }
   };
 
   const handleMenuSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -110,23 +117,34 @@ const useLayoutProps: RunTimeLayoutConfig = ({
       pathname,
     },
     siderWidth: 256,
+    openKeys,
+    onOpenChange: (keys) => setOpenKeys(keys || []),
     menu: {
       locale: config.layout?.menuLocale,
       params: currentUser,
       request: async () => {
         const { data } = isDev ? await getMenuData() : { data: menuData };
+        const allKeys = getOpenKeysByMenuData(data);
+        setAllKeys(allKeys);
         return patchRoutes(data);
       },
     },
     formatMessage: formatMessage,
     menuItemRender: (menuItemProps, defaultDom) => {
+      const content =
+        keyWord !== ""
+          ? highlightText(menuItemProps.name || "", {
+              query: keyWord,
+              renderMark: defaultRenderMark,
+            })
+          : defaultDom;
       if (menuItemProps.isUrl || menuItemProps.children) {
-        return defaultDom;
+        return content;
       }
-      if (menuItemProps.path && location.pathname !== menuItemProps.path) {
+      if (menuItemProps.path && pathname !== menuItemProps.path) {
         return (
           <Link href={menuItemProps.path} target={menuItemProps.target}>
-            {defaultDom}
+            {content}
           </Link>
         );
       }
