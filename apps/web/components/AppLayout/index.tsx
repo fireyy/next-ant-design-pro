@@ -148,7 +148,17 @@ const useLayoutProps: RunTimeLayoutConfig = ({
           </Link>
         );
       }
-      return defaultDom;
+      return content;
+    },
+    subMenuItemRender: (menuItemProps, defaultDom) => {
+      const content =
+        keyWord !== ""
+          ? highlightText(menuItemProps.name || "", {
+              query: keyWord,
+              renderMark: defaultRenderMark,
+            })
+          : defaultDom;
+      return content;
     },
     menuExtraRender: ({ collapsed }) =>
       !collapsed && (
