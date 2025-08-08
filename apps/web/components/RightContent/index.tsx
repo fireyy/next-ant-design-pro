@@ -1,4 +1,4 @@
-import { GithubFilled, QuestionCircleOutlined } from "@ant-design/icons";
+import { GithubFilled } from "@ant-design/icons";
 import { SelectLang as SelectLangComponent } from "@/lib/locales";
 import HelpContent from "@/components/HelpContent";
 

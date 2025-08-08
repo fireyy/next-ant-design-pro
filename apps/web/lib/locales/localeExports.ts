@@ -1,6 +1,6 @@
 import { createIntl, IntlShape, MessageDescriptor } from "react-intl";
-import EventEmitter from "event-emitter";
 import { config } from "@/config";
+import Emittery from "emittery";
 
 export { createIntl };
 export {
@@ -28,10 +28,9 @@ let g_intl: IntlShape;
 
 const useLocalStorage = true;
 
-// @ts-ignore
-export const event = new EventEmitter();
-
 export const LANG_CHANGE_EVENT = Symbol("LANG_CHANGE");
+
+export const event = new Emittery();
 
 import bnBD0 from "antd/es/locale/bn_BD";
 import lang_bnBD0 from "@/locales/bn-BD.ts";
@@ -302,14 +301,6 @@ export const getDirection = () => {
  * @returns string
  */
 export const setLocale = (lang: string, realReload: boolean = true) => {
-  //const { pluginManager } = useAppContext();
-  //const runtimeLocale = pluginManagerapplyPlugins({
-  //  key: 'locale',
-  //  workaround: 不使用 ApplyPluginsType.modify 是为了避免循环依赖，与 fast-refresh 一起用时会有问题
-  //  type: 'modify',
-  //  initialValue: {},
-  //});
-
   const updater = () => {
     if (getLocale() !== lang) {
       if (
@@ -332,15 +323,6 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
       }
     }
   };
-
-  //if (typeof runtimeLocale?.setLocale === 'function') {
-  //  runtimeLocale.setLocale({
-  //    lang,
-  //    realReload,
-  //    updater: updater,
-  //  });
-  //  return;
-  //}
 
   updater();
 };
