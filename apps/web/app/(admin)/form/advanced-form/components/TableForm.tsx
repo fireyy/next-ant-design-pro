@@ -1,8 +1,8 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Divider, Input, message, Popconfirm, Table } from 'antd';
-import type { FC } from 'react';
-import React, { useState } from 'react';
-import useStyles from '../style.style';
+import { PlusOutlined } from "@ant-design/icons";
+import { Button, Divider, Input, message, Popconfirm, Table } from "antd";
+import type { FC } from "react";
+import React, { useState } from "react";
+import useStyles from "../style.style";
 
 type TableFormDateType = {
   key: string;
@@ -55,9 +55,9 @@ const TableForm: FC<TableFormProps> = ({ value, onChange }) => {
       })) || [];
     newData.push({
       key: `NEW_TEMP_ID_${index}`,
-      workId: '',
-      name: '',
-      department: '',
+      workId: "",
+      name: "",
+      department: "",
       editable: true,
       isNew: true,
     });
@@ -81,7 +81,7 @@ const TableForm: FC<TableFormProps> = ({ value, onChange }) => {
     const newData = [...(data as TableFormDateType[])];
     const target = getRowByKey(key, newData);
     if (target?.[fieldName]) {
-      target[fieldName as 'key'] = e.target.value;
+      target[fieldName as "key"] = e.target.value;
       setData(newData);
     }
   };
@@ -93,9 +93,9 @@ const TableForm: FC<TableFormProps> = ({ value, onChange }) => {
         setClickedCancel(false);
         return;
       }
-      const target = getRowByKey(key) || ({} as any);
+      const target = getRowByKey(key) || ({} as TableFormDateType);
       if (!target.workId || !target.name || !target.department) {
-        message.error('请填写完整成员信息。');
+        message.error("请填写完整成员信息。");
         (e.target as HTMLInputElement).focus();
         setLoading(false);
         return;
@@ -109,7 +109,7 @@ const TableForm: FC<TableFormProps> = ({ value, onChange }) => {
     }, 500);
   };
   const handleKeyPress = (e: React.KeyboardEvent, key: string) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       saveRow(e, key);
     }
   };
@@ -139,17 +139,17 @@ const TableForm: FC<TableFormProps> = ({ value, onChange }) => {
   };
   const columns = [
     {
-      title: '成员姓名',
-      dataIndex: 'name',
-      key: 'name',
-      width: '20%',
+      title: "成员姓名",
+      dataIndex: "name",
+      key: "name",
+      width: "20%",
       render: (text: string, record: TableFormDateType) => {
         if (record.editable) {
           return (
             <Input
               value={text}
               autoFocus
-              onChange={(e) => handleFieldChange(e, 'name', record.key)}
+              onChange={(e) => handleFieldChange(e, "name", record.key)}
               onKeyPress={(e) => handleKeyPress(e, record.key)}
               placeholder="成员姓名"
             />
@@ -159,16 +159,16 @@ const TableForm: FC<TableFormProps> = ({ value, onChange }) => {
       },
     },
     {
-      title: '工号',
-      dataIndex: 'workId',
-      key: 'workId',
-      width: '20%',
+      title: "工号",
+      dataIndex: "workId",
+      key: "workId",
+      width: "20%",
       render: (text: string, record: TableFormDateType) => {
         if (record.editable) {
           return (
             <Input
               value={text}
-              onChange={(e) => handleFieldChange(e, 'workId', record.key)}
+              onChange={(e) => handleFieldChange(e, "workId", record.key)}
               onKeyPress={(e) => handleKeyPress(e, record.key)}
               placeholder="工号"
             />
@@ -178,16 +178,16 @@ const TableForm: FC<TableFormProps> = ({ value, onChange }) => {
       },
     },
     {
-      title: '所属部门',
-      dataIndex: 'department',
-      key: 'department',
-      width: '40%',
+      title: "所属部门",
+      dataIndex: "department",
+      key: "department",
+      width: "40%",
       render: (text: string, record: TableFormDateType) => {
         if (record.editable) {
           return (
             <Input
               value={text}
-              onChange={(e) => handleFieldChange(e, 'department', record.key)}
+              onChange={(e) => handleFieldChange(e, "department", record.key)}
               onKeyPress={(e) => handleKeyPress(e, record.key)}
               placeholder="所属部门"
             />
@@ -197,8 +197,8 @@ const TableForm: FC<TableFormProps> = ({ value, onChange }) => {
       },
     },
     {
-      title: '操作',
-      key: 'action',
+      title: "操作",
+      key: "action",
       render: (_text: string, record: TableFormDateType) => {
         if (!!record.editable && loading) {
           return null;
@@ -248,11 +248,11 @@ const TableForm: FC<TableFormProps> = ({ value, onChange }) => {
         columns={columns}
         dataSource={data}
         pagination={false}
-        rowClassName={(record) => (record.editable ? styles.editable : '')}
+        rowClassName={(record) => (record.editable ? styles.editable : "")}
       />
       <Button
         style={{
-          width: '100%',
+          width: "100%",
           marginTop: 16,
           marginBottom: 8,
         }}

@@ -1,9 +1,9 @@
-import { Pie } from '@ant-design/plots';
-import { Card, Segmented, Typography } from 'antd';
-import numeral from 'numeral';
-import React from 'react';
-import type { DataItem } from '../data.d';
-import useStyles from '../style.style';
+import { Pie } from "@ant-design/plots";
+import { Card, Segmented, Typography } from "antd";
+import numeral from "numeral";
+import React from "react";
+import type { DataItem } from "../data.d";
+import useStyles from "../style.style";
 
 const { Text } = Typography;
 const ProportionSales = ({
@@ -15,9 +15,9 @@ const ProportionSales = ({
 }: {
   loading: boolean;
   dropdownGroup: React.ReactNode;
-  salesType: 'all' | 'online' | 'stores';
+  salesType: "all" | "online" | "stores";
   salesPieData: DataItem[];
-  handleChangeSalesType?: (value: 'all' | 'online' | 'stores') => void;
+  handleChangeSalesType?: (value: "all" | "online" | "stores") => void;
 }) => {
   const { styles } = useStyles();
   return (
@@ -27,7 +27,7 @@ const ProportionSales = ({
       variant="borderless"
       title="销售额类别占比"
       style={{
-        height: '100%',
+        height: "100%",
       }}
       extra={
         <div className={styles.salesCardExtra}>
@@ -37,9 +37,9 @@ const ProportionSales = ({
             value={salesType}
             onChange={handleChangeSalesType}
             options={[
-              { label: '全部渠道', value: 'all' },
-              { label: '线上', value: 'online' },
-              { label: '门店', value: 'stores' },
+              { label: "全部渠道", value: "all" },
+              { label: "线上", value: "online" },
+              { label: "门店", value: "stores" },
             ]}
             size="middle"
           />
@@ -53,12 +53,12 @@ const ProportionSales = ({
         innerRadius={0.5}
         angleField="y"
         colorField="x"
-        data={salesPieData as any}
+        data={salesPieData}
         legend={false}
         label={{
-          position: 'spider',
+          position: "spider",
           text: (item: { x: number; y: number }) =>
-            `${item.x}: ${numeral(item.y).format('0,0')}`,
+            `${item.x}: ${numeral(item.y).format("0,0")}`,
         }}
       />
     </Card>

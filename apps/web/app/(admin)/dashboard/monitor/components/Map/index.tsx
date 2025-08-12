@@ -23,10 +23,10 @@ export default function MonitorMap() {
       setLoading(true);
       const [geoData, gridData] = await Promise.all([
         fetch(
-          "https://gw.alipayobjects.com/os/bmw-prod/c5dba875-b6ea-4e88-b778-66a862906c93.json"
+          "https://gw.alipayobjects.com/os/bmw-prod/c5dba875-b6ea-4e88-b778-66a862906c93.json",
         ).then((d) => d.json()),
         fetch(
-          "https://gw.alipayobjects.com/os/bmw-prod/8990e8b4-c58e-419b-afb9-8ea3daff2dd1.json"
+          "https://gw.alipayobjects.com/os/bmw-prod/8990e8b4-c58e-419b-afb9-8ea3daff2dd1.json",
         ).then((d) => d.json()),
       ]);
       setData(geoData);
@@ -90,15 +90,7 @@ export default function MonitorMap() {
           }}
           color={{
             field: "cum_conf",
-            value: [
-              "#eff3ff",
-              "#c6dbef",
-              "#9ecae1",
-              "#6baed6",
-              "#4292c6",
-              "#2171b5",
-              "#084594",
-            ],
+            value: colors,
           }}
           shape="circle"
           activeColor="#0c2c84"
